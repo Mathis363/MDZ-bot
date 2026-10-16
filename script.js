@@ -1,5 +1,5 @@
 /* ============================================================
-   MDZ & M_N_M_S Bot — site config
+   M_N_M_S Bot — site config
    API_BASE = URL publique de l'API du bot (aiohttp) pour la connexion.
    En local : http://localhost:8790
    En ligne : l'URL de votre hébergement (ex: https://mdz-bot.onrender.com)
@@ -12,7 +12,7 @@ const SITE_URL = "https://mathis363.github.io/MDZ-bot/";
    ============================================================ */
 const I18N = {
   en: {
-    "meta.title": "MDZ & M_N_M_S Bot — Custom Discord bots",
+    "meta.title": "M_N_M_S Bot — Custom Discord bots",
     "nav.services": "Services",
     "nav.demo": "Demo",
     "nav.process": "Process",
@@ -163,7 +163,7 @@ const I18N = {
   },
 
   fr: {
-    "meta.title": "MDZ & M_N_M_S Bot — Bots Discord sur mesure",
+    "meta.title": "M_N_M_S Bot — Bots Discord sur mesure",
     "nav.services": "Services",
     "nav.demo": "Démo",
     "nav.process": "Process",
@@ -587,10 +587,10 @@ let restartChatDemo = null;
   const buildSeq = () => [
     { type: "msg", html: `<div class="msg msg--user"><span class="msg__ava">Y</span><div><div class="msg__meta"><b>${t("chat.you")}</b><time>${t("chat.today")}</time></div><div class="msg__content chat-cmd">/website</div></div></div>` },
     typingMsg(),
-    { type: "msg", html: `<div class="msg msg--bot">${botAva}<div><div class="msg__meta"><b class="bot-name">MDZ &amp; M_N_M_S Bot</b><span class="app-tag">APP</span><time>${t("chat.today")}</time></div><div class="msg__content"><div class="embed"><div class="embed__title">${t("chat.embedTitle")}</div><div class="embed__desc">${t("chat.embedDesc")}</div><div class="embed__link">${link}</div></div></div></div></div>` },
+    { type: "msg", html: `<div class="msg msg--bot">${botAva}<div><div class="msg__meta"><b class="bot-name">M_N_M_S Bot</b><span class="app-tag">APP</span><time>${t("chat.today")}</time></div><div class="msg__content"><div class="embed"><div class="embed__title">${t("chat.embedTitle")}</div><div class="embed__desc">${t("chat.embedDesc")}</div><div class="embed__link">${link}</div></div></div></div></div>` },
     { type: "msg", html: `<div class="msg msg--user"><span class="msg__ava">Y</span><div><div class="msg__meta"><b>${t("chat.you")}</b><time>${t("chat.today")}</time></div><div class="msg__content chat-cmd">/webcode 482915</div></div></div>` },
     typingMsg(),
-    { type: "msg", html: `<div class="msg msg--bot">${botAva}<div><div class="msg__meta"><b class="bot-name">MDZ &amp; M_N_M_S Bot</b><span class="app-tag">APP</span><time>${t("chat.today")}</time></div><div class="msg__content">${t("chat.success")}</div></div></div>` },
+    { type: "msg", html: `<div class="msg msg--bot">${botAva}<div><div class="msg__meta"><b class="bot-name">M_N_M_S Bot</b><span class="app-tag">APP</span><time>${t("chat.today")}</time></div><div class="msg__content">${t("chat.success")}</div></div></div>` },
   ];
 
   let seq = buildSeq();
