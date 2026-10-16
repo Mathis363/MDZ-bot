@@ -145,6 +145,10 @@ const I18N = {
     "admin.mute": "Mute",
     "admin.unmute": "Unmute",
     "admin.mutedTag": "muted",
+    "admin.kick": "Kick",
+    "admin.ban": "Ban",
+    "admin.kickConfirm": "Kick {name} from the server?",
+    "admin.banConfirm": "Ban {name} from the server?",
     "admin.sending": "Sending…",
     "admin.sent": "✅ Announcement sent!",
     "admin.error": "❌ Action failed ({msg}).",
@@ -292,6 +296,10 @@ const I18N = {
     "admin.mute": "Mute",
     "admin.unmute": "Unmute",
     "admin.mutedTag": "muet",
+    "admin.kick": "Expulser",
+    "admin.ban": "Bannir",
+    "admin.kickConfirm": "Expulser {name} du serveur ?",
+    "admin.banConfirm": "Bannir {name} du serveur ?",
     "admin.sending": "Envoi…",
     "admin.sent": "✅ Annonce envoyée !",
     "admin.error": "❌ Action échouée ({msg}).",
@@ -1088,8 +1096,10 @@ async function loadModMembers(q) {
           <small>@${esc(m.tag)}</small>
         </div>
         <div class="admin__row-actions">
-          <button class="admin__mini admin__mini--danger" data-mute="${m.id}">${t("admin.mute")}</button>
+          <button class="admin__mini admin__mini--danger" data-mute="${m.id}" data-name="${esc(m.name)}">${t("admin.mute")}</button>
           <button class="admin__mini admin__mini--ok" data-unmute="${m.id}">${t("admin.unmute")}</button>
+          <button class="admin__mini admin__mini--warn" data-kick="${m.id}" data-name="${esc(m.name)}">${t("admin.kick")}</button>
+          <button class="admin__mini admin__mini--ban" data-ban="${m.id}" data-name="${esc(m.name)}">${t("admin.ban")}</button>
         </div>
       </div>`
       )
@@ -1099,6 +1109,12 @@ async function loadModMembers(q) {
     );
     list.querySelectorAll("[data-unmute]").forEach((b) =>
       b.addEventListener("click", () => unmuteMember(b.dataset.unmute, b))
+    );
+    list.querySelectorAll("[data-kick]").forEach((b) =>
+      b.addEventListener("click", () => kickMember(b.dataset.kick, b.dataset.name, b))
+    );
+    list.querySelectorAll("[data-ban]").forEach((b) =>
+      b.addEventListener("click", () => banMember(b.dataset.ban, b.dataset.name, b))
     );
   } catch (err) {
     list.innerHTML = `<div class="admin__empty">${err.message === "forbidden" ? t("admin.forbidden") : esc(err.message)}</div>`;
@@ -1127,6 +1143,39 @@ async function unmuteMember(id, btn) {
     await adminFetch("/api/admin/unmute", {
       method: "POST",
       body: JSON.stringify({ member_id: id }),
+    });
+    loadModMembers(document.getElementById("modSearch").value.trim());
+  } catch (err) {
+    btn.disabled = false;
+    alert(err.message === "forbidden" ? t("admin.forbidden") : err.message);
+  }
+}
+
+async function kickMember(id, name, btn) {
+  if (!confirm(tReplace("admin.kickConfirm", { name }))) return;
+  const reason = document.getElementById("modReason").value.trim();
+  btn.disabled = true;
+  try {
+    await adminFetch("/api/admin/kick", {
+      method: "POST",
+      body: JSON.stringify({ member_id: id, reason }),
+    });
+    loadModMembers(document.getElementById("modSearch").value.trim());
+  } catch (err) {
+    btn.disabled = false;
+    alert(err.message === "forbidden" ? t("admin.forbidden") : err.message);
+  }
+}
+
+async function banMember(id, name, btn) {
+  if (!confirm(tReplace("admin.banConfirm", { name }))) return;
+  const duration = document.getElementById("modDuration").value.trim();
+  const reason = document.getElementById("modReason").value.trim();
+  btn.disabled = true;
+  try {
+    await adminFetch("/api/admin/ban", {
+      method: "POST",
+      body: JSON.stringify({ member_id: id, duration, reason }),
     });
     loadModMembers(document.getElementById("modSearch").value.trim());
   } catch (err) {
@@ -1174,29 +1223,6 @@ if (modSearch)
   modSearch.addEventListener("keydown", (e) => {
     if (e.key === "Enter") loadModMembers(modSearch.value.trim());
   });
-
-/* ---------- Cursor spotlight (premium background glow) ---------- */
-(function spotlight() {
-  const el = document.getElementById("spotlight");
-  if (!el) return;
-  let sx = 50, sy = 30, tx = 50, ty = 30, raf = 0;
-  window.addEventListener(
-    "pointermove",
-    (e) => {
-      tx = (e.clientX / window.innerWidth) * 100;
-      ty = (e.clientY / window.innerHeight) * 100;
-      if (!raf) raf = requestAnimationFrame(tick);
-    },
-    { passive: true }
-  );
-  function tick() {
-    sx += (tx - sx) * 0.12;
-    sy += (ty - sy) * 0.12;
-    el.style.setProperty("--sx", sx.toFixed(2) + "%");
-    el.style.setProperty("--sy", sy.toFixed(2) + "%");
-    raf = Math.abs(tx - sx) > 0.1 || Math.abs(ty - sy) > 0.1 ? requestAnimationFrame(tick) : 0;
-  }
-})();
 
 /* ---------- Device notice: shown on phones / tablets only ---------- */
 (function deviceNotice() {
