@@ -375,9 +375,11 @@ document.querySelectorAll("[data-magnetic]").forEach((el) => {
     cY += (tY - cY) * 0.16;
     if (Math.abs(tX - cX) < 0.05 && Math.abs(tY - cY) < 0.05) {
       cX = tX; cY = tY;
-      if (!cX && !cY) { el.style.transform = ""; raf = null; return; }
+      el.style.transform = (cX || cY) ? `translate(${cX}px, ${cY}px)` : "";
+      raf = null;
+      return;
     }
-    el.style.transform = `translate(${cX}px, ${cY}px)`;
+    el.style.transform = `translate(${cX.toFixed(2)}px, ${cY.toFixed(2)}px)`;
     raf = requestAnimationFrame(tick);
   };
   const start = () => { if (!raf) raf = requestAnimationFrame(tick); };
@@ -397,19 +399,28 @@ document.querySelectorAll("[data-magnetic]").forEach((el) => {
 document.querySelectorAll("[data-tilt]").forEach((el) => {
   const MAX = 8;
   let tX = 0, tY = 0, tL = 0, cX = 0, cY = 0, cL = 0, raf = null;
+  const frame = () =>
+    `perspective(1100px) rotateY(${cX.toFixed(3)}deg) rotateX(${cY.toFixed(3)}deg) translateY(${cL.toFixed(3)}px)`;
   const tick = () => {
     cX += (tX - cX) * 0.12;
     cY += (tY - cY) * 0.12;
     cL += (tL - cL) * 0.12;
-    const near = Math.abs(tX - cX) < 0.03 && Math.abs(tY - cY) < 0.03 && Math.abs(tL - cL) < 0.03;
-    if (near) {
+    if (Math.abs(tX - cX) < 0.03 && Math.abs(tY - cY) < 0.03 && Math.abs(tL - cL) < 0.03) {
       cX = tX; cY = tY; cL = tL;
-      if (cX === 0 && cY === 0 && cL === 0) { el.style.transform = ""; raf = null; return; }
+      if (!cX && !cY && !cL) {
+        el.style.transform = "";
+        el.style.transition = "";
+      } else {
+        el.style.transform = frame();
+      }
+      raf = null;
+      return;
     }
-    el.style.transform = `perspective(1100px) rotateY(${cX.toFixed(3)}deg) rotateX(${cY.toFixed(3)}deg) translateY(${cL.toFixed(3)}px)`;
+    el.style.transform = frame();
     raf = requestAnimationFrame(tick);
   };
   const start = () => { if (!raf) raf = requestAnimationFrame(tick); };
+  el.addEventListener("pointerenter", () => { el.style.transition = "none"; });
   el.addEventListener("pointermove", (e) => {
     const r = el.getBoundingClientRect();
     const px = (e.clientX - r.left) / r.width - 0.5;
