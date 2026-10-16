@@ -1197,3 +1197,27 @@ if (modSearch)
     raf = Math.abs(tx - sx) > 0.1 || Math.abs(ty - sy) > 0.1 ? requestAnimationFrame(tick) : 0;
   }
 })();
+
+/* ---------- Device notice: shown on phones / tablets only ---------- */
+(function deviceNotice() {
+  const popup = document.getElementById("devicePopup");
+  if (!popup) return;
+  const ua = navigator.userAgent || "";
+  const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini|Mobile|Tablet/i.test(ua);
+  const touchOnly = window.matchMedia && window.matchMedia("(hover: none) and (pointer: coarse)").matches;
+  if (!isMobile && !touchOnly) return;
+  try {
+    if (sessionStorage.getItem("mdz_device_notice") === "1") return;
+  } catch (_) {}
+  popup.classList.add("open");
+  document.body.classList.add("locked");
+  const close = () => {
+    popup.classList.remove("open");
+    document.body.classList.remove("locked");
+    try { sessionStorage.setItem("mdz_device_notice", "1"); } catch (_) {}
+  };
+  const btn = document.getElementById("devicePopupClose");
+  if (btn) btn.addEventListener("click", close);
+  const backdrop = popup.querySelector(".device-popup__backdrop");
+  if (backdrop) backdrop.addEventListener("click", close);
+})();
