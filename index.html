@@ -5,161 +5,203 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>MDZ Bot — Bots Discord sur mesure</title>
   <meta name="description" content="Bots Discord personnalisés, puissants et fiables. Modération, économie, musique, tickets et plus. Livraison rapide." />
+  <meta name="theme-color" content="#07080d" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <header class="nav">
+  <div class="bg">
+    <div class="bg__grid"></div>
+    <div class="bg__orb bg__orb--1"></div>
+    <div class="bg__orb bg__orb--2"></div>
+    <div class="bg__orb bg__orb--3"></div>
+    <div class="bg__noise"></div>
+  </div>
+
+  <div class="cursor-glow" id="cursorGlow"></div>
+
+  <header class="nav" id="nav">
     <div class="container nav__inner">
       <a href="#" class="brand">
-        <span class="brand__logo">MDZ</span>
-        <span class="brand__name">Bot</span>
+        <span class="brand__logo">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 6c4-1.5 12-1.5 16 0 1.5 3 2.5 7 2.5 10.5-2 2.5-5 3.5-5 3.5l-1-1.7c1.2-.4 2-.9 2-.9C14.5 19 12 19 12 19s-2.5 0-6.5-1.6c0 0 .8.5 2 .9L6.5 20S3.5 19 1.5 16.5C1.5 13 2.5 9 4 6Z" fill="currentColor"/><circle cx="9" cy="13" r="1.6" fill="#07080d"/><circle cx="15" cy="13" r="1.6" fill="#07080d"/></svg>
+        </span>
+        <span class="brand__text">MDZ<em>Bot</em></span>
       </a>
       <nav class="nav__links">
         <a href="#services">Services</a>
-        <a href="#tarifs">Tarifs</a>
+        <a href="#process">Process</a>
+        <a href="#avis">Avis</a>
         <a href="#faq">FAQ</a>
-        <a href="#contact" class="btn btn--small btn--primary">Commander</a>
       </nav>
+      <a href="#contact" class="btn btn--primary btn--small">Démarrer <span class="arrow">→</span></a>
     </div>
   </header>
 
   <main>
     <section class="hero">
       <div class="container hero__inner">
-        <span class="badge">Bots Discord sur mesure</span>
-        <h1 class="hero__title">Le bot Discord qu'il vous faut,<br /><span class="gradient">livré clé en main.</span></h1>
+        <span class="badge"><span class="dot"></span> Développement Discord sur mesure</span>
+        <h1 class="hero__title">
+          Des bots Discord<br />
+          <span class="grad">qui font la différence.</span>
+        </h1>
         <p class="hero__sub">
-          Modération, économie, musique, tickets, niveaux, giveaways… Nous développons,
-          hébergeons et maintenons votre bot pour votre communauté.
+          Nous concevons, hébergeons et maintenons votre bot sur mesure.
+          Modération, économie, musique, tickets, niveaux — votre communauté mérite mieux.
         </p>
         <div class="hero__actions">
-          <a href="#tarifs" class="btn btn--primary">Voir les tarifs</a>
-          <a href="#contact" class="btn btn--ghost">Demander un devis</a>
+          <a href="#contact" class="btn btn--primary btn--lg">Lancer mon projet <span class="arrow">→</span></a>
+          <a href="#services" class="btn btn--glass btn--lg">Explorer les services</a>
         </div>
-        <ul class="hero__stats">
-          <li><strong>+120</strong><span>Bots livrés</span></li>
-          <li><strong>24/7</strong><span>Hébergement</span></li>
-          <li><strong>48h</strong><span>Livraison express</span></li>
-        </ul>
+
+        <div class="stats">
+          <div class="stat"><strong>24/7</strong><span>Hébergement inclus</span></div>
+          <div class="stat"><strong>48h</strong><span>Livraison express</span></div>
+          <div class="stat"><strong>100%</strong><span>Code sur mesure</span></div>
+          <div class="stat"><strong>∞</strong><span>Personnalisation</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="marquee">
+      <div class="marquee__track">
+        <span>🛡️ Anti-Raid</span><span>💰 Économie</span><span>🎵 Musique HD</span><span>🎫 Tickets</span><span>📈 Levels &amp; XP</span><span>🎉 Giveaways</span><span>🤖 IA</span><span>🔔 Webhooks</span><span>📊 Dashboard</span><span>⚡ Slash Commands</span>
+        <span>🛡️ Anti-Raid</span><span>💰 Économie</span><span>🎵 Musique HD</span><span>🎫 Tickets</span><span>📈 Levels &amp; XP</span><span>🎉 Giveaways</span><span>🤖 IA</span><span>🔔 Webhooks</span><span>📊 Dashboard</span><span>⚡ Slash Commands</span>
       </div>
     </section>
 
     <section id="services" class="section">
       <div class="container">
-        <h2 class="section__title">Ce que nous développons</h2>
-        <p class="section__sub">Des fonctionnalités pensées pour votre serveur.</p>
-        <div class="grid">
-          <article class="card">
-            <div class="card__icon">🛡️</div>
-            <h3>Modération</h3>
-            <p>Anti-spam, anti-raid, auto-mod, sanctions automatiques et logs complets.</p>
+        <div class="section__head reveal">
+          <span class="eyebrow">Services</span>
+          <h2 class="section__title">Tout ce dont votre serveur a besoin</h2>
+          <p class="section__sub">Des modules pensés pour être puissants, rapides et totalement personnalisés.</p>
+        </div>
+
+        <div class="bento">
+          <article class="cell cell--wide reveal">
+            <div class="cell__glow"></div>
+            <div class="cell__icon">🛡️</div>
+            <h3>Modération &amp; Sécurité</h3>
+            <p>Anti-spam, anti-raid, auto-mod intelligent, sanctions automatiques et logs complets en temps réel.</p>
+            <div class="cell__chips"><span>Anti-raid</span><span>Auto-mod</span><span>Logs</span></div>
           </article>
-          <article class="card">
-            <div class="card__icon">💰</div>
-            <h3>Économie & Boutique</h3>
-            <p>Monnaie virtuelle, achats, rôles récompenses et mini-jeux.</p>
+
+          <article class="cell reveal">
+            <div class="cell__icon">💰</div>
+            <h3>Économie</h3>
+            <p>Monnaie virtuelle, boutique, rôles récompenses et mini-jeux.</p>
           </article>
-          <article class="card">
-            <div class="card__icon">🎵</div>
+
+          <article class="cell reveal">
+            <div class="cell__icon">🎵</div>
             <h3>Musique</h3>
-            <p>Lecture YouTube/Spotify, file d'attente, playlists et contrôles.</p>
+            <p>Lecture YouTube &amp; Spotify, file d'attente et playlists.</p>
           </article>
-          <article class="card">
-            <div class="card__icon">🎫</div>
-            <h3>Tickets & Support</h3>
-            <p>Système de tickets, transcripts et panneaux de support.</p>
+
+          <article class="cell cell--tall reveal">
+            <div class="cell__icon">🎫</div>
+            <h3>Tickets &amp; Support</h3>
+            <p>Système de tickets complet, transcripts automatiques et panneaux interactifs.</p>
+            <div class="mini-ui">
+              <div class="mini-ui__row"><span class="mini-ui__dot"></span> Nouveau ticket · <b>#support</b></div>
+              <div class="mini-ui__row"><span class="mini-ui__dot"></span> Transcript envoyé au staff</div>
+              <div class="mini-ui__row"><span class="mini-ui__dot"></span> Ticket fermé ✓</div>
+            </div>
           </article>
-          <article class="card">
-            <div class="card__icon">📈</div>
-            <h3>Niveaux & XP</h3>
-            <p>Système de niveaux, rôles automatiques et classements.</p>
+
+          <article class="cell reveal">
+            <div class="cell__icon">📈</div>
+            <h3>Niveaux &amp; XP</h3>
+            <p>Progression, rôles auto et classements.</p>
           </article>
-          <article class="card">
-            <div class="card__icon">🎉</div>
+
+          <article class="cell reveal">
+            <div class="cell__icon">🎉</div>
             <h3>Giveaways</h3>
-            <p>Concours automatisés avec conditions d'entrée et tirages.</p>
+            <p>Concours automatisés avec conditions et tirages.</p>
           </article>
         </div>
       </div>
     </section>
 
-    <section id="tarifs" class="section section--alt">
+    <section id="process" class="section section--tight">
       <div class="container">
-        <h2 class="section__title">Tarifs</h2>
-        <p class="section__sub">Paiement unique ou abonnement. Hébergement inclus.</p>
-        <div class="pricing">
-          <article class="price-card">
-            <h3>Essentiel</h3>
-            <p class="price"><span>49€</span></p>
-            <ul>
-              <li>1 à 3 fonctionnalités</li>
-              <li>Bot personnalisé (nom/avatar)</li>
-              <li>Hébergement 1 mois inclus</li>
-              <li>Support 7 jours</li>
-            </ul>
-            <a href="#contact" class="btn btn--ghost btn--full">Commander</a>
-          </article>
-          <article class="price-card price-card--featured">
-            <span class="tag">Populaire</span>
-            <h3>Pro</h3>
-            <p class="price"><span>129€</span></p>
-            <ul>
-              <li>Jusqu'à 8 fonctionnalités</li>
-              <li>Dashboard web inclus</li>
-              <li>Hébergement 3 mois inclus</li>
-              <li>Support prioritaire 30 jours</li>
-            </ul>
-            <a href="#contact" class="btn btn--primary btn--full">Commander</a>
-          </article>
-          <article class="price-card">
-            <h3>Sur mesure</h3>
-            <p class="price"><span>Sur devis</span></p>
-            <ul>
-              <li>Fonctionnalités illimitées</li>
-              <li>Intégrations API externes</li>
-              <li>Hébergement dédié</li>
-              <li>Maintenance mensuelle</li>
-            </ul>
-            <a href="#contact" class="btn btn--ghost btn--full">Nous contacter</a>
-          </article>
+        <div class="section__head reveal">
+          <span class="eyebrow">Process</span>
+          <h2 class="section__title">De l'idée au bot, en 3 étapes</h2>
+        </div>
+        <div class="steps">
+          <div class="step reveal">
+            <span class="step__num">01</span>
+            <h3>Discussion</h3>
+            <p>On définit ensemble vos besoins et les fonctionnalités souhaitées.</p>
+          </div>
+          <div class="step reveal">
+            <span class="step__num">02</span>
+            <h3>Développement</h3>
+            <p>Nous codons et testons votre bot, avec un aperçu suivi en temps réel.</p>
+          </div>
+          <div class="step reveal">
+            <span class="step__num">03</span>
+            <h3>Mise en ligne</h3>
+            <p>Déploiement 24/7, formation à l'usage et support continu.</p>
+          </div>
         </div>
       </div>
     </section>
 
-    <section id="faq" class="section">
+    <section id="avis" class="section">
       <div class="container">
-        <h2 class="section__title">Questions fréquentes</h2>
+        <div class="section__head reveal">
+          <span class="eyebrow">Avis</span>
+          <h2 class="section__title">Ils nous ont fait confiance</h2>
+        </div>
+        <div class="tstm">
+          <figure class="tstm__card reveal">
+            <blockquote>« Bot livré en 3 jours, exactement comme demandé. Le support est ultra réactif. »</blockquote>
+            <figcaption><span class="ava">A</span><div><strong>Alex</strong><small>Serveur 12k membres</small></div></figcaption>
+          </figure>
+          <figure class="tstm__card reveal">
+            <blockquote>« Les fonctionnalités d'auto-mod ont transformé la gestion de notre communauté. »</blockquote>
+            <figcaption><span class="ava">M</span><div><strong>Marie</strong><small>Communauté gaming</small></div></figcaption>
+          </figure>
+          <figure class="tstm__card reveal">
+            <blockquote>« Interface de config super claire et bot vraiment stable. Je recommande. »</blockquote>
+            <figcaption><span class="ava">T</span><div><strong>Thomas</strong><small>Serveur créatif</small></div></figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <section id="faq" class="section section--tight">
+      <div class="container">
+        <div class="section__head reveal">
+          <span class="eyebrow">FAQ</span>
+          <h2 class="section__title">Questions fréquentes</h2>
+        </div>
         <div class="faq">
-          <details>
-            <summary>Combien de temps pour recevoir mon bot ?</summary>
-            <p>En général 2 à 5 jours selon la complexité. Un service express en 48h est possible.</p>
-          </details>
-          <details>
-            <summary>Le bot est-il hébergé ?</summary>
-            <p>Oui, l'hébergement 24/7 est inclus. Vous pouvez aussi l'héberger vous-même.</p>
-          </details>
-          <details>
-            <summary>Puis-je demander des modifications ?</summary>
-            <p>Oui, des retours gratuits sont inclus après livraison, puis un tarif à l'heure si besoin.</p>
-          </details>
-          <details>
-            <summary>Quels modes de paiement acceptez-vous ?</summary>
-            <p>PayPal, virement et cryptomonnaies. Le paiement se fait à la commande.</p>
-          </details>
+          <details class="reveal"><summary>Combien de temps pour recevoir mon bot ?</summary><p>En général 2 à 5 jours selon la complexité. Un service express en 48h est possible.</p></details>
+          <details class="reveal"><summary>Le bot est-il hébergé ?</summary><p>Oui, l'hébergement 24/7 est inclus. Vous pouvez aussi l'héberger vous-même.</p></details>
+          <details class="reveal"><summary>Puis-je demander des modifications ?</summary><p>Oui, des retours gratuits sont inclus après livraison, puis un tarif à l'heure si besoin.</p></details>
+          <details class="reveal"><summary>Quels modes de paiement acceptez-vous ?</summary><p>PayPal, virement et cryptomonnaies.</p></details>
         </div>
       </div>
     </section>
 
-    <section id="contact" class="section section--alt">
-      <div class="container contact">
-        <h2 class="section__title">Prêt à commander ?</h2>
-        <p class="section__sub">Rejoignez notre Discord ou écrivez-nous, réponse sous 24h.</p>
-        <div class="contact__actions">
-          <a href="https://discord.gg/" target="_blank" rel="noopener" class="btn btn--primary">Rejoindre le Discord</a>
-          <a href="mailto:contact@mdz-bot.dev" class="btn btn--ghost">contact@mdz-bot.dev</a>
+    <section id="contact" class="section">
+      <div class="container">
+        <div class="cta reveal">
+          <div class="cta__glow"></div>
+          <h2>Prêt à donner vie à votre bot&nbsp;?</h2>
+          <p>Rejoignez notre Discord ou écrivez-nous. Réponse sous 24h.</p>
+          <div class="cta__actions">
+            <a href="https://discord.gg/" target="_blank" rel="noopener" class="btn btn--primary btn--lg">Rejoindre le Discord <span class="arrow">→</span></a>
+            <a href="mailto:contact@mdz-bot.dev" class="btn btn--glass btn--lg">contact@mdz-bot.dev</a>
+          </div>
         </div>
       </div>
     </section>
@@ -167,8 +209,11 @@
 
   <footer class="footer">
     <div class="container footer__inner">
-      <span>© <span id="year"></span> MDZ Bot. Tous droits réservés.</span>
-      <span>Bots Discord sur mesure</span>
+      <a href="#" class="brand brand--footer">
+        <span class="brand__logo"><svg viewBox="0 0 24 24" fill="none"><path d="M4 6c4-1.5 12-1.5 16 0 1.5 3 2.5 7 2.5 10.5-2 2.5-5 3.5-5 3.5l-1-1.7c1.2-.4 2-.9 2-.9C14.5 19 12 19 12 19s-2.5 0-6.5-1.6c0 0 .8.5 2 .9L6.5 20S3.5 19 1.5 16.5C1.5 13 2.5 9 4 6Z" fill="currentColor"/><circle cx="9" cy="13" r="1.6" fill="#07080d"/><circle cx="15" cy="13" r="1.6" fill="#07080d"/></svg></span>
+        <span class="brand__text">MDZ<em>Bot</em></span>
+      </a>
+      <span>© <span id="year"></span> MDZ Bot — Tous droits réservés.</span>
     </div>
   </footer>
 
