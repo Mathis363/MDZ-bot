@@ -697,7 +697,9 @@ async function syncUserLang() {
     if (!data || !data.lang || !I18N[data.lang]) return;
     if (u.botLang === undefined) {
       u.botLang = data.lang;
+      u.lang = data.lang;
       try { localStorage.setItem("mdz_user", JSON.stringify(u)); } catch (_) {}
+      applyLang(data.lang);
       return;
     }
     if (data.lang !== u.botLang) {
@@ -764,7 +766,10 @@ document.getElementById("logoutBtn").addEventListener("click", () => {
 
 document.addEventListener("DOMContentLoaded", () => {
   const saved = localStorage.getItem("mdz_user");
-  if (saved) renderUser(JSON.parse(saved));
+  if (saved) {
+    renderUser(JSON.parse(saved));
+    syncUserLang();
+  }
 });
 
 /* ============================================================
