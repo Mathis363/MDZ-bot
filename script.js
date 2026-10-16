@@ -596,22 +596,32 @@ function renderUser(u) {
   btn.innerHTML = `<img src="${u.avatar}" style="width:18px;height:18px;border-radius:50%"> ${u.name}`;
   if (u.lang && I18N[u.lang]) applyLang(u.lang);
   updateContactForm();
-  syncUserLang(u);
+  syncUserLang();
 }
 
-async function syncUserLang(u) {
+async function syncUserLang() {
+  let u;
+  try {
+    u = JSON.parse(localStorage.getItem("mdz_user") || "null");
+  } catch (_) {
+    u = null;
+  }
   if (!u || !u.id) return;
   try {
     const r = await fetch(`${API_BASE}/api/user/${u.id}`, { cache: "no-store" });
     if (!r.ok) return;
     const data = await r.json();
-    if (data && data.lang && I18N[data.lang]) {
+    if (data && data.lang && I18N[data.lang] && data.lang !== u.lang) {
       u.lang = data.lang;
       try { localStorage.setItem("mdz_user", JSON.stringify(u)); } catch (_) {}
       applyLang(data.lang);
     }
   } catch (_) {}
 }
+
+setInterval(syncUserLang, 5000);
+window.addEventListener("focus", syncUserLang);
+document.addEventListener("visibilitychange", () => { if (!document.hidden) syncUserLang(); });
 
 document.getElementById("startPair").addEventListener("click", async () => {
   try {
