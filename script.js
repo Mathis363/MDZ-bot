@@ -694,7 +694,14 @@ async function syncUserLang() {
     const r = await fetch(`${API_BASE}/api/user/${u.id}`, { cache: "no-store" });
     if (!r.ok) return;
     const data = await r.json();
-    if (data && data.lang && I18N[data.lang] && data.lang !== u.lang) {
+    if (!data || !data.lang || !I18N[data.lang]) return;
+    if (u.botLang === undefined) {
+      u.botLang = data.lang;
+      try { localStorage.setItem("mdz_user", JSON.stringify(u)); } catch (_) {}
+      return;
+    }
+    if (data.lang !== u.botLang) {
+      u.botLang = data.lang;
       u.lang = data.lang;
       try { localStorage.setItem("mdz_user", JSON.stringify(u)); } catch (_) {}
       applyLang(data.lang);
@@ -729,6 +736,7 @@ function pollStatus(code) {
       const data = await r.json();
       if (data.status === "linked" && data.user) {
         clearInterval(pollTimer);
+        if (data.user.lang) data.user.botLang = data.user.lang;
         localStorage.setItem("mdz_user", JSON.stringify(data.user));
         renderUser(data.user);
         showState(stateDone);
@@ -1161,3 +1169,26 @@ if (modSearch)
   modSearch.addEventListener("keydown", (e) => {
     if (e.key === "Enter") loadModMembers(modSearch.value.trim());
   });
+
+/* ---------- Cursor spotlight (premium background glow) ---------- */
+(function spotlight() {
+  const el = document.getElementById("spotlight");
+  if (!el) return;
+  let sx = 50, sy = 30, tx = 50, ty = 30, raf = 0;
+  window.addEventListener(
+    "pointermove",
+    (e) => {
+      tx = (e.clientX / window.innerWidth) * 100;
+      ty = (e.clientY / window.innerHeight) * 100;
+      if (!raf) raf = requestAnimationFrame(tick);
+    },
+    { passive: true }
+  );
+  function tick() {
+    sx += (tx - sx) * 0.12;
+    sy += (ty - sy) * 0.12;
+    el.style.setProperty("--sx", sx.toFixed(2) + "%");
+    el.style.setProperty("--sy", sy.toFixed(2) + "%");
+    raf = Math.abs(tx - sx) > 0.1 || Math.abs(ty - sy) > 0.1 ? requestAnimationFrame(tick) : 0;
+  }
+})();
