@@ -903,13 +903,27 @@ async function adminFetch(path, options) {
 
 function isAdminUser() {
   const u = getStoredUser();
-  return !!(u && u.admin && u.token);
+  return !!(u && u.token);
 }
 
-function updateAdminVisibility() {
+async function updateAdminVisibility() {
   const adminSection = document.getElementById("admin");
   const adminBtn = document.getElementById("adminBtn");
-  const ok = isAdminUser();
+  const u = getStoredUser();
+  let ok = false;
+  if (u && u.token) {
+    ok = !!u.admin;
+    if (!ok) {
+      try {
+        const res = await adminFetch("/api/admin/check");
+        if (res.admin) {
+          ok = true;
+          u.admin = true;
+          try { localStorage.setItem("mdz_user", JSON.stringify(u)); } catch (_) {}
+        }
+      } catch (_) {}
+    }
+  }
   if (adminBtn) adminBtn.classList.toggle("is-hidden", !ok);
   if (adminSection && !ok) adminSection.classList.add("is-hidden");
 }
