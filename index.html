@@ -218,11 +218,20 @@
           <div class="cta__ring"></div>
           <div class="cta__glow"></div>
           <h2>Prêt à donner vie à votre bot&nbsp;?</h2>
-          <p>Rejoignez notre Discord ou écrivez-nous. Réponse sous 24h.</p>
-          <div class="cta__actions">
-            <a href="https://discord.gg/" target="_blank" rel="noopener" class="btn btn--primary btn--lg" data-magnetic>Rejoindre le Discord <span class="arrow">→</span></a>
-            <a href="mailto:contact@mdz-bot.dev" class="btn btn--glass btn--lg" data-magnetic>contact@mdz-bot.dev</a>
-          </div>
+          <p>Remplis le formulaire, on ouvre un ticket et on te répond sous 24h.</p>
+          <form class="contact-form" id="contactForm" novalidate>
+            <div class="field">
+              <input type="text" id="cName" maxlength="100" placeholder="Ton nom / pseudo" autocomplete="name" required />
+            </div>
+            <div class="field">
+              <input type="text" id="cContact" maxlength="200" placeholder="Email ou Discord (ex : toi)" required />
+            </div>
+            <div class="field">
+              <textarea id="cMessage" maxlength="2000" rows="4" placeholder="Décris ton projet, tes besoins…" required></textarea>
+            </div>
+            <button type="submit" class="btn btn--primary btn--lg" data-magnetic>Envoyer <span class="arrow">→</span></button>
+            <div class="form-status" id="formStatus" role="status"></div>
+          </form>
         </div>
       </div>
     </section>

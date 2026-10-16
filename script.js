@@ -311,3 +311,47 @@ document.addEventListener("DOMContentLoaded", () => {
   const saved = localStorage.getItem("mdz_user");
   if (saved) renderUser(JSON.parse(saved));
 });
+
+/* ============================================================
+   FORMULAIRE DE CONTACT -> ticket Discord
+   ============================================================ */
+(function contactForm() {
+  const form = document.getElementById("contactForm");
+  if (!form) return;
+  const status = document.getElementById("formStatus");
+  const btn = form.querySelector("button[type=submit]");
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const name = document.getElementById("cName").value.trim();
+    const contact = document.getElementById("cContact").value.trim();
+    const message = document.getElementById("cMessage").value.trim();
+
+    if (!name || !contact || !message) {
+      status.className = "form-status err";
+      status.textContent = "Merci de remplir tous les champs.";
+      return;
+    }
+
+    btn.disabled = true;
+    status.className = "form-status";
+    status.textContent = "Envoi en cours…";
+
+    try {
+      const r = await fetch(`${API_BASE}/api/contact`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, contact, message }),
+      });
+      if (!r.ok) throw new Error("api");
+      status.className = "form-status ok";
+      status.textContent = "✅ Message envoyé ! On te répond très vite.";
+      form.reset();
+    } catch (_) {
+      status.className = "form-status err";
+      status.textContent = "❌ Envoi impossible (bot hors ligne ?). Réessaie plus tard.";
+    } finally {
+      btn.disabled = false;
+    }
+  });
+})();
