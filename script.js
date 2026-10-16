@@ -257,8 +257,6 @@ function applyI18n() {
     const items = t("marquee.items");
     marqueeTrack.innerHTML = items + items;
   }
-  const langLabel = document.getElementById("langLabel");
-  if (langLabel) langLabel.textContent = lang === "en" ? "FR" : "EN";
 }
 
 function applyLang(newLang) {
@@ -270,21 +268,6 @@ function applyLang(newLang) {
   applyI18n();
   updateContactForm();
   if (typeof restartChatDemo === "function" && restartChatDemo) restartChatDemo();
-}
-
-const langToggle = document.getElementById("langToggle");
-if (langToggle) {
-  langToggle.addEventListener("click", () => {
-    applyLang(lang === "en" ? "fr" : "en");
-    const raw = localStorage.getItem("mdz_user");
-    if (raw) {
-      try {
-        const u = JSON.parse(raw);
-        u.lang = lang;
-        localStorage.setItem("mdz_user", JSON.stringify(u));
-      } catch (_) {}
-    }
-  });
 }
 
 document.getElementById("year").textContent = new Date().getFullYear();
@@ -386,27 +369,59 @@ document.querySelectorAll("a, button, .btn, .cell, .stat").forEach((el) => {
 });
 
 document.querySelectorAll("[data-magnetic]").forEach((el) => {
+  let tX = 0, tY = 0, cX = 0, cY = 0, raf = null;
+  const tick = () => {
+    cX += (tX - cX) * 0.16;
+    cY += (tY - cY) * 0.16;
+    if (Math.abs(tX - cX) < 0.05 && Math.abs(tY - cY) < 0.05) {
+      cX = tX; cY = tY;
+      if (!cX && !cY) { el.style.transform = ""; raf = null; return; }
+    }
+    el.style.transform = `translate(${cX}px, ${cY}px)`;
+    raf = requestAnimationFrame(tick);
+  };
+  const start = () => { if (!raf) raf = requestAnimationFrame(tick); };
   el.addEventListener("pointermove", (e) => {
     const r = el.getBoundingClientRect();
-    const x = e.clientX - r.left - r.width / 2;
-    const y = e.clientY - r.top - r.height / 2;
-    el.style.transform = `translate(${x * 0.25}px, ${y * 0.35}px)`;
+    tX = (e.clientX - r.left - r.width / 2) * 0.25;
+    tY = (e.clientY - r.top - r.height / 2) * 0.35;
+    start();
   });
   el.addEventListener("pointerleave", () => {
-    el.style.transform = "";
+    tX = 0; tY = 0;
+    start();
   });
 });
 
-/* ---------- 3D tilt ---------- */
+/* ---------- 3D tilt (smooth) ---------- */
 document.querySelectorAll("[data-tilt]").forEach((el) => {
+  const MAX = 8;
+  let tX = 0, tY = 0, tL = 0, cX = 0, cY = 0, cL = 0, raf = null;
+  const tick = () => {
+    cX += (tX - cX) * 0.12;
+    cY += (tY - cY) * 0.12;
+    cL += (tL - cL) * 0.12;
+    const near = Math.abs(tX - cX) < 0.03 && Math.abs(tY - cY) < 0.03 && Math.abs(tL - cL) < 0.03;
+    if (near) {
+      cX = tX; cY = tY; cL = tL;
+      if (cX === 0 && cY === 0 && cL === 0) { el.style.transform = ""; raf = null; return; }
+    }
+    el.style.transform = `perspective(1100px) rotateY(${cX.toFixed(3)}deg) rotateX(${cY.toFixed(3)}deg) translateY(${cL.toFixed(3)}px)`;
+    raf = requestAnimationFrame(tick);
+  };
+  const start = () => { if (!raf) raf = requestAnimationFrame(tick); };
   el.addEventListener("pointermove", (e) => {
     const r = el.getBoundingClientRect();
     const px = (e.clientX - r.left) / r.width - 0.5;
     const py = (e.clientY - r.top) / r.height - 0.5;
-    el.style.transform = `perspective(1000px) rotateY(${px * 8}deg) rotateX(${-py * 8}deg) translateY(-4px)`;
+    tX = px * MAX;
+    tY = -py * MAX;
+    tL = -5;
+    start();
   });
   el.addEventListener("pointerleave", () => {
-    el.style.transform = "";
+    tX = 0; tY = 0; tL = 0;
+    start();
   });
 });
 
