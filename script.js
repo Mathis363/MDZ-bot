@@ -259,6 +259,7 @@ function renderUser(u) {
   document.getElementById("userTag").textContent = u.tag ? "@" + u.tag : "";
   const btn = document.getElementById("loginBtn");
   btn.innerHTML = `<img src="${u.avatar}" style="width:18px;height:18px;border-radius:50%"> ${u.name}`;
+  updateContactForm();
 }
 
 document.getElementById("startPair").addEventListener("click", async () => {
@@ -287,6 +288,7 @@ function pollStatus(code) {
         localStorage.setItem("mdz_user", JSON.stringify(data.user));
         renderUser(data.user);
         showState(stateDone);
+        setTimeout(closeModal, 1200);
       }
     } catch (_) {}
   }, 2000);
@@ -313,45 +315,97 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 /* ============================================================
-   FORMULAIRE DE CONTACT -> ticket Discord
+   FORMULAIRE DE CONTACT (ticket Discord) — affiché après clic,
+   réservé aux utilisateurs connectés avec Discord.
    ============================================================ */
-(function contactForm() {
-  const form = document.getElementById("contactForm");
-  if (!form) return;
-  const status = document.getElementById("formStatus");
-  const btn = form.querySelector("button[type=submit]");
+const contactForm = document.getElementById("contactForm");
+const contactStart = document.getElementById("contactStart");
+const openTicketBtn = document.getElementById("openTicketForm");
 
-  form.addEventListener("submit", async (e) => {
+function updateContactForm() {
+  if (!contactForm || contactForm.classList.contains("is-hidden")) return;
+  const raw = localStorage.getItem("mdz_user");
+  const user = raw ? JSON.parse(raw) : null;
+  const formUser = document.getElementById("formUser");
+  const formGuest = document.getElementById("formGuest");
+  const formFields = document.getElementById("formFields");
+  if (user) {
+    document.getElementById("formUserAva").src = user.avatar;
+    document.getElementById("formUserName").textContent = user.name;
+    formUser.classList.remove("is-hidden");
+    formGuest.classList.add("is-hidden");
+    formFields.classList.remove("is-hidden");
+  } else {
+    formUser.classList.add("is-hidden");
+    formFields.classList.add("is-hidden");
+    formGuest.classList.remove("is-hidden");
+  }
+}
+
+if (openTicketBtn) {
+  openTicketBtn.addEventListener("click", () => {
+    contactStart.classList.add("is-hidden");
+    contactForm.classList.remove("is-hidden");
+    updateContactForm();
+  });
+}
+
+const formLoginBtn = document.getElementById("formLogin");
+if (formLoginBtn) formLoginBtn.addEventListener("click", openModal);
+
+if (contactForm) {
+  const statusEl = document.getElementById("formStatus");
+  const submitBtn = contactForm.querySelector("button[type=submit]");
+
+  contactForm.addEventListener("submit", async (e) => {
     e.preventDefault();
-    const name = document.getElementById("cName").value.trim();
-    const contact = document.getElementById("cContact").value.trim();
+
+    const raw = localStorage.getItem("mdz_user");
+    if (!raw) {
+      updateContactForm();
+      return;
+    }
+    const user = JSON.parse(raw);
+    const title = document.getElementById("cTitle").value.trim();
     const message = document.getElementById("cMessage").value.trim();
 
-    if (!name || !contact || !message) {
-      status.className = "form-status err";
-      status.textContent = "Merci de remplir tous les champs.";
+    if (!title || !message) {
+      statusEl.className = "form-status err";
+      statusEl.textContent = "Merci de remplir le titre et la description.";
       return;
     }
 
-    btn.disabled = true;
-    status.className = "form-status";
-    status.textContent = "Envoi en cours…";
+    submitBtn.disabled = true;
+    statusEl.className = "form-status";
+    statusEl.textContent = "Envoi en cours…";
 
     try {
       const r = await fetch(`${API_BASE}/api/contact`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, contact, message }),
+        body: JSON.stringify({ title, message, user }),
       });
-      if (!r.ok) throw new Error("api");
-      status.className = "form-status ok";
-      status.textContent = "✅ Message envoyé ! On te répond très vite.";
-      form.reset();
-    } catch (_) {
-      status.className = "form-status err";
-      status.textContent = "❌ Envoi impossible (bot hors ligne ?). Réessaie plus tard.";
+      if (!r.ok) {
+        let apiError = "http_" + r.status;
+        try {
+          const j = await r.json();
+          if (j && j.error) apiError = j.error;
+        } catch (_) {}
+        throw new Error(apiError);
+      }
+      statusEl.className = "form-status ok";
+      statusEl.textContent = "✅ Ticket envoyé ! On te répond très vite.";
+      contactForm.reset();
+    } catch (err) {
+      statusEl.className = "form-status err";
+      if (err.message === "no_guild") {
+        statusEl.textContent = "⚠️ Le bot n'est encore sur aucun serveur.";
+      } else {
+        statusEl.textContent =
+          `❌ Envoi impossible (${err.message}). Vérifie que le bot est lancé et joignable sur ${API_BASE}.`;
+      }
     } finally {
-      btn.disabled = false;
+      submitBtn.disabled = false;
     }
   });
-})();
+}

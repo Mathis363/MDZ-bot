@@ -218,19 +218,33 @@
           <div class="cta__ring"></div>
           <div class="cta__glow"></div>
           <h2>Prêt à donner vie à votre bot&nbsp;?</h2>
-          <p>Remplis le formulaire, on ouvre un ticket et on te répond sous 24h.</p>
-          <form class="contact-form" id="contactForm" novalidate>
-            <div class="field">
-              <input type="text" id="cName" maxlength="100" placeholder="Ton nom / pseudo" autocomplete="name" required />
+          <p>Connecte-toi avec Discord puis décris ton projet : on ouvre un ticket et on te répond sous 24h.</p>
+
+          <div class="cta__actions" id="contactStart">
+            <button class="btn btn--primary btn--lg" id="openTicketForm" data-magnetic>Créer mon bot <span class="arrow">→</span></button>
+          </div>
+
+          <form class="contact-form is-hidden" id="contactForm" novalidate>
+            <div class="form-user is-hidden" id="formUser">
+              <img id="formUserAva" alt="avatar" />
+              <div><strong id="formUserName">—</strong><small>Connecté avec Discord</small></div>
             </div>
-            <div class="field">
-              <input type="text" id="cContact" maxlength="200" placeholder="Email ou Discord (ex : toi)" required />
+
+            <div class="form-guest is-hidden" id="formGuest">
+              <p>Connecte ton compte Discord pour créer ton bot.</p>
+              <button type="button" class="btn btn--primary" id="formLogin">Se connecter avec Discord</button>
             </div>
-            <div class="field">
-              <textarea id="cMessage" maxlength="2000" rows="4" placeholder="Décris ton projet, tes besoins…" required></textarea>
+
+            <div class="form-fields is-hidden" id="formFields">
+              <div class="field">
+                <input type="text" id="cTitle" maxlength="100" placeholder="Titre du bot (ex : Bot de modération)" required />
+              </div>
+              <div class="field">
+                <textarea id="cMessage" maxlength="2000" rows="4" placeholder="Décris ton projet, tes besoins…" required></textarea>
+              </div>
+              <button type="submit" class="btn btn--primary btn--lg" data-magnetic>Envoyer <span class="arrow">→</span></button>
+              <div class="form-status" id="formStatus" role="status"></div>
             </div>
-            <button type="submit" class="btn btn--primary btn--lg" data-magnetic>Envoyer <span class="arrow">→</span></button>
-            <div class="form-status" id="formStatus" role="status"></div>
           </form>
         </div>
       </div>
