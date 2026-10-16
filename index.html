@@ -51,6 +51,10 @@
         <a href="#contact" data-magnetic data-i18n="nav.contact">Contact</a>
       </nav>
       <div class="nav__actions">
+        <button class="btn btn--glass btn--small is-hidden" id="adminBtn" data-magnetic>
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M12 2 4 5v6c0 5 3.4 8.7 8 11 4.6-2.3 8-6 8-11V5l-8-3Zm0 6a3 3 0 1 1 0 6 3 3 0 0 1 0-6Zm0 11c-1.7 0-3.2-.9-4-2.2.9-.8 2.4-1.3 4-1.3s3.1.5 4 1.3c-.8 1.3-2.3 2.2-4 2.2Z"/></svg>
+          <span data-i18n="nav.admin">Admin</span>
+        </button>
         <button class="btn btn--glass btn--small" id="loginBtn" data-magnetic>
           <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M4 6c4-1.5 12-1.5 16 0 1.5 3 2.5 7 2.5 10.5-2 2.5-5 3.5-5 3.5l-1-1.7c1.2-.4 2-.9 2-.9C14.5 19 12 19 12 19s-2.5 0-6.5-1.6c0 0 .8.5 2 .9L6.5 20S3.5 19 1.5 16.5C1.5 13 2.5 9 4 6Z"/></svg>
           <span data-i18n="nav.login">Login</span>
@@ -246,6 +250,77 @@
       </div>
     </section>
   </main>
+
+  <section id="admin" class="section is-hidden">
+    <div class="container">
+      <div class="section__head reveal">
+        <span class="eyebrow" data-i18n="admin.eyebrow">Administration</span>
+        <h2 class="section__title" data-i18n="admin.title">Admin panel</h2>
+        <p class="section__sub" data-i18n="admin.sub">Visible only to server administrators.</p>
+      </div>
+
+      <div class="admin reveal">
+        <div class="admin__tabs">
+          <button class="admin__tab is-active" data-tab="announce"><span>📣</span> <span data-i18n="admin.tab.announce">Announcement</span></button>
+          <button class="admin__tab" data-tab="tickets"><span>🎫</span> <span data-i18n="admin.tab.tickets">Tickets</span></button>
+          <button class="admin__tab" data-tab="mod"><span>🔨</span> <span data-i18n="admin.tab.mod">Moderation</span></button>
+          <button class="admin__tab" data-tab="stats"><span>📊</span> <span data-i18n="admin.tab.stats">Statistics</span></button>
+        </div>
+
+        <div class="admin__panels">
+          <div class="admin__panel is-active" data-panel="announce">
+            <div class="admin__field">
+              <label data-i18n="admin.channel">Channel</label>
+              <select id="annChannel"></select>
+            </div>
+            <div class="admin__field">
+              <label data-i18n="admin.annTitle">Title</label>
+              <input type="text" id="annTitle" maxlength="256" data-i18n-ph="admin.annTitlePh" placeholder="Announcement title" />
+            </div>
+            <div class="admin__field">
+              <label data-i18n="admin.annMessage">Message</label>
+              <textarea id="annMessage" rows="4" maxlength="4000" data-i18n-ph="admin.annMessagePh" placeholder="Your announcement…"></textarea>
+            </div>
+            <button class="btn btn--primary" id="annSend"><span data-i18n="admin.annSend">Send announcement</span> <span class="arrow">→</span></button>
+            <div class="form-status" id="annStatus" role="status"></div>
+          </div>
+
+          <div class="admin__panel" data-panel="tickets">
+            <div class="admin__bar">
+              <button class="btn btn--glass btn--small" id="ticketsRefresh"><span data-i18n="admin.refresh">Refresh</span></button>
+              <span class="admin__count" id="ticketsCount"></span>
+            </div>
+            <div class="admin__list" id="ticketsList"></div>
+          </div>
+
+          <div class="admin__panel" data-panel="mod">
+            <div class="admin__mod-form">
+              <div class="admin__field">
+                <label data-i18n="admin.duration">Duration</label>
+                <input type="text" id="modDuration" value="10m" data-i18n-ph="admin.durationPh" placeholder="10m, 2h, 1d" />
+              </div>
+              <div class="admin__field admin__field--grow">
+                <label data-i18n="admin.reason">Reason</label>
+                <input type="text" id="modReason" maxlength="200" data-i18n-ph="admin.reasonPh" placeholder="Reason (optional)" />
+              </div>
+            </div>
+            <div class="admin__bar">
+              <input type="text" id="modSearch" data-i18n-ph="admin.searchPh" placeholder="Search a member…" />
+              <button class="btn btn--glass btn--small" id="modSearchBtn"><span data-i18n="admin.search">Search</span></button>
+            </div>
+            <div class="admin__list" id="modList"></div>
+          </div>
+
+          <div class="admin__panel" data-panel="stats">
+            <div class="admin__bar">
+              <button class="btn btn--glass btn--small" id="statsRefresh"><span data-i18n="admin.refresh">Refresh</span></button>
+            </div>
+            <div class="admin__stats" id="statsGrid"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 
   <footer class="footer">
     <div class="container footer__inner">

@@ -115,6 +115,47 @@ const I18N = {
     "chat.embedTitle": "🌐 Our website",
     "chat.embedDesc": "Discover all our services and log in to your account.",
     "chat.success": "✅ <b>Login successful!</b> Your Discord account is now linked to the website.",
+
+    "contact.alreadyOpen": "You already have an open ticket. Please wait for it to be handled.",
+
+    "nav.admin": "Admin",
+    "admin.eyebrow": "Administration",
+    "admin.title": "Admin panel",
+    "admin.sub": "Visible only to server administrators.",
+    "admin.tab.announce": "Announcement",
+    "admin.tab.tickets": "Tickets",
+    "admin.tab.mod": "Moderation",
+    "admin.tab.stats": "Statistics",
+    "admin.channel": "Channel",
+    "admin.annTitle": "Title",
+    "admin.annTitlePh": "Announcement title",
+    "admin.annMessage": "Message",
+    "admin.annMessagePh": "Your announcement…",
+    "admin.annSend": "Send announcement",
+    "admin.refresh": "Refresh",
+    "admin.duration": "Duration",
+    "admin.durationPh": "10m, 2h, 1d",
+    "admin.reason": "Reason",
+    "admin.reasonPh": "Reason (optional)",
+    "admin.searchPh": "Search a member…",
+    "admin.search": "Search",
+    "admin.empty": "Nothing to display.",
+    "admin.loading": "Loading…",
+    "admin.close": "Close",
+    "admin.mute": "Mute",
+    "admin.unmute": "Unmute",
+    "admin.mutedTag": "muted",
+    "admin.sending": "Sending…",
+    "admin.sent": "✅ Announcement sent!",
+    "admin.error": "❌ Action failed ({msg}).",
+    "admin.forbidden": "⛔ You don't have administrator permission.",
+    "admin.stat.members": "Members",
+    "admin.stat.humans": "Humans",
+    "admin.stat.bots": "Bots",
+    "admin.stat.admins": "Admins",
+    "admin.stat.roles": "Roles",
+    "admin.stat.channels": "Channels",
+    "admin.stat.tickets": "Open tickets",
   },
 
   fr: {
@@ -221,6 +262,47 @@ const I18N = {
     "chat.embedTitle": "🌐 Notre site web",
     "chat.embedDesc": "Découvrez tous nos services et connectez-vous à votre compte.",
     "chat.success": "✅ <b>Connexion réussie !</b> Ton compte Discord est maintenant lié au site web.",
+
+    "contact.alreadyOpen": "Tu as déjà un ticket ouvert. Merci d'attendre qu'il soit traité.",
+
+    "nav.admin": "Admin",
+    "admin.eyebrow": "Administration",
+    "admin.title": "Panel admin",
+    "admin.sub": "Visible uniquement par les administrateurs du serveur.",
+    "admin.tab.announce": "Annonce",
+    "admin.tab.tickets": "Tickets",
+    "admin.tab.mod": "Modération",
+    "admin.tab.stats": "Statistiques",
+    "admin.channel": "Salon",
+    "admin.annTitle": "Titre",
+    "admin.annTitlePh": "Titre de l'annonce",
+    "admin.annMessage": "Message",
+    "admin.annMessagePh": "Ton annonce…",
+    "admin.annSend": "Envoyer l'annonce",
+    "admin.refresh": "Actualiser",
+    "admin.duration": "Durée",
+    "admin.durationPh": "10m, 2h, 1j",
+    "admin.reason": "Raison",
+    "admin.reasonPh": "Raison (optionnel)",
+    "admin.searchPh": "Rechercher un membre…",
+    "admin.search": "Rechercher",
+    "admin.empty": "Rien à afficher.",
+    "admin.loading": "Chargement…",
+    "admin.close": "Fermer",
+    "admin.mute": "Mute",
+    "admin.unmute": "Unmute",
+    "admin.mutedTag": "muet",
+    "admin.sending": "Envoi…",
+    "admin.sent": "✅ Annonce envoyée !",
+    "admin.error": "❌ Action échouée ({msg}).",
+    "admin.forbidden": "⛔ Tu n'as pas la permission administrateur.",
+    "admin.stat.members": "Membres",
+    "admin.stat.humans": "Humains",
+    "admin.stat.bots": "Bots",
+    "admin.stat.admins": "Admins",
+    "admin.stat.roles": "Rôles",
+    "admin.stat.channels": "Salons",
+    "admin.stat.tickets": "Tickets ouverts",
   },
 };
 
@@ -597,6 +679,7 @@ function renderUser(u) {
   if (u.lang && I18N[u.lang]) applyLang(u.lang);
   updateContactForm();
   syncUserLang();
+  if (typeof updateAdminVisibility === "function") updateAdminVisibility();
 }
 
 async function syncUserLang() {
@@ -667,6 +750,7 @@ document.getElementById("logoutBtn").addEventListener("click", () => {
   localStorage.removeItem("mdz_user");
   resetLoginBtn();
   updateContactForm();
+  if (typeof updateAdminVisibility === "function") updateAdminVisibility();
   showState(stateStart);
 });
 
@@ -759,6 +843,8 @@ if (contactForm) {
       statusEl.className = "form-status err";
       if (err.message === "no_guild") {
         statusEl.textContent = t("contact.noGuild");
+      } else if (err.message === "already_open") {
+        statusEl.textContent = t("contact.alreadyOpen");
       } else {
         statusEl.textContent = tReplace("contact.error", { msg: err.message, api: API_BASE });
       }
@@ -771,3 +857,293 @@ if (contactForm) {
 /* ---------- Apply language on load ---------- */
 applyI18n();
 updateContactForm();
+if (typeof updateAdminVisibility === "function") updateAdminVisibility();
+
+/* ============================================================
+   ADMIN PANEL — visible uniquement pour les admins du serveur
+   (vérification côté bot via le jeton obtenu à la connexion)
+   ============================================================ */
+function esc(s) {
+  return String(s ?? "").replace(/[&<>"']/g, (c) =>
+    ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c])
+  );
+}
+
+function getStoredUser() {
+  try {
+    return JSON.parse(localStorage.getItem("mdz_user") || "null");
+  } catch (_) {
+    return null;
+  }
+}
+
+function adminHeaders() {
+  const u = getStoredUser();
+  return { "Content-Type": "application/json", "X-Admin-Token": (u && u.token) || "" };
+}
+
+async function adminFetch(path, options) {
+  const opts = options || {};
+  const r = await fetch(`${API_BASE}${path}`, {
+    method: opts.method || "GET",
+    headers: Object.assign({}, adminHeaders(), opts.headers || {}),
+    body: opts.body,
+    cache: "no-store",
+  });
+  let data = null;
+  try {
+    data = await r.json();
+  } catch (_) {}
+  if (!r.ok) {
+    if (r.status === 403) throw new Error("forbidden");
+    throw new Error((data && data.error) || "http_" + r.status);
+  }
+  return data || {};
+}
+
+function isAdminUser() {
+  const u = getStoredUser();
+  return !!(u && u.admin && u.token);
+}
+
+function updateAdminVisibility() {
+  const adminSection = document.getElementById("admin");
+  const adminBtn = document.getElementById("adminBtn");
+  const ok = isAdminUser();
+  if (adminBtn) adminBtn.classList.toggle("is-hidden", !ok);
+  if (adminSection && !ok) adminSection.classList.add("is-hidden");
+}
+
+const adminSection = document.getElementById("admin");
+const adminBtn = document.getElementById("adminBtn");
+
+async function openAdmin() {
+  if (!isAdminUser()) return;
+  try {
+    const res = await adminFetch("/api/admin/check");
+    if (!res.admin) return;
+  } catch (_) {
+    return;
+  }
+  if (adminSection) {
+    adminSection.classList.remove("is-hidden");
+    adminSection.scrollIntoView({ behavior: "smooth" });
+  }
+  loadChannels();
+  loadTickets();
+  loadModMembers("");
+  loadStats();
+}
+if (adminBtn) adminBtn.addEventListener("click", openAdmin);
+
+document.querySelectorAll(".admin__tab").forEach((tab) => {
+  tab.addEventListener("click", () => {
+    document.querySelectorAll(".admin__tab").forEach((x) => x.classList.remove("is-active"));
+    document.querySelectorAll(".admin__panel").forEach((p) => p.classList.remove("is-active"));
+    tab.classList.add("is-active");
+    const panel = document.querySelector(`.admin__panel[data-panel="${tab.dataset.tab}"]`);
+    if (panel) panel.classList.add("is-active");
+  });
+});
+
+async function loadChannels() {
+  const sel = document.getElementById("annChannel");
+  if (!sel) return;
+  try {
+    const { channels } = await adminFetch("/api/admin/channels");
+    if (!channels || !channels.length) {
+      sel.innerHTML = `<option value="">—</option>`;
+      return;
+    }
+    sel.innerHTML = channels.map((c) => `<option value="${c.id}">#${esc(c.name)}</option>`).join("");
+  } catch (_) {}
+}
+
+const annSend = document.getElementById("annSend");
+if (annSend) {
+  annSend.addEventListener("click", async () => {
+    const statusEl = document.getElementById("annStatus");
+    const channel_id = document.getElementById("annChannel").value;
+    const title = document.getElementById("annTitle").value.trim();
+    const message = document.getElementById("annMessage").value.trim();
+    if (!channel_id || !title || !message) {
+      statusEl.className = "form-status err";
+      statusEl.textContent = t("contact.fill");
+      return;
+    }
+    annSend.disabled = true;
+    statusEl.className = "form-status";
+    statusEl.textContent = t("admin.sending");
+    try {
+      await adminFetch("/api/admin/announce", {
+        method: "POST",
+        body: JSON.stringify({ channel_id, title, message }),
+      });
+      statusEl.className = "form-status ok";
+      statusEl.textContent = t("admin.sent");
+      document.getElementById("annTitle").value = "";
+      document.getElementById("annMessage").value = "";
+    } catch (err) {
+      statusEl.className = "form-status err";
+      statusEl.textContent =
+        err.message === "forbidden" ? t("admin.forbidden") : tReplace("admin.error", { msg: err.message });
+    } finally {
+      annSend.disabled = false;
+    }
+  });
+}
+
+async function loadTickets() {
+  const list = document.getElementById("ticketsList");
+  const count = document.getElementById("ticketsCount");
+  if (!list) return;
+  list.innerHTML = `<div class="admin__empty">${t("admin.loading")}</div>`;
+  try {
+    const { tickets } = await adminFetch("/api/admin/tickets");
+    if (count) count.textContent = String((tickets || []).length);
+    if (!tickets || !tickets.length) {
+      list.innerHTML = `<div class="admin__empty">${t("admin.empty")}</div>`;
+      return;
+    }
+    list.innerHTML = tickets
+      .map(
+        (tk) => `
+      <div class="admin__row">
+        <div class="admin__row-info">
+          <strong>#${esc(tk.name)}</strong>
+          <small>${tk.title ? esc(tk.title) + " — " : ""}${tk.owner_name ? esc(tk.owner_name) : "?"}</small>
+        </div>
+        <div class="admin__row-actions">
+          <button class="admin__mini admin__mini--danger" data-close="${tk.id}">${t("admin.close")}</button>
+        </div>
+      </div>`
+      )
+      .join("");
+    list.querySelectorAll("[data-close]").forEach((b) =>
+      b.addEventListener("click", () => closeTicket(b.dataset.close, b))
+    );
+  } catch (err) {
+    list.innerHTML = `<div class="admin__empty">${err.message === "forbidden" ? t("admin.forbidden") : esc(err.message)}</div>`;
+  }
+}
+
+async function closeTicket(id, btn) {
+  btn.disabled = true;
+  try {
+    await adminFetch("/api/admin/tickets/close", {
+      method: "POST",
+      body: JSON.stringify({ channel_id: id }),
+    });
+    loadTickets();
+  } catch (err) {
+    btn.disabled = false;
+    alert(err.message === "forbidden" ? t("admin.forbidden") : err.message);
+  }
+}
+
+async function loadModMembers(q) {
+  const list = document.getElementById("modList");
+  if (!list) return;
+  list.innerHTML = `<div class="admin__empty">${t("admin.loading")}</div>`;
+  try {
+    const { members } = await adminFetch(`/api/admin/members?q=${encodeURIComponent(q || "")}`);
+    if (!members || !members.length) {
+      list.innerHTML = `<div class="admin__empty">${t("admin.empty")}</div>`;
+      return;
+    }
+    list.innerHTML = members
+      .map(
+        (m) => `
+      <div class="admin__row">
+        <img src="${esc(m.avatar)}" alt="" />
+        <div class="admin__row-info">
+          <strong>${esc(m.name)}${m.muted ? ` <span class="admin__tag">${t("admin.mutedTag")}</span>` : ""}</strong>
+          <small>@${esc(m.tag)}</small>
+        </div>
+        <div class="admin__row-actions">
+          <button class="admin__mini admin__mini--danger" data-mute="${m.id}">${t("admin.mute")}</button>
+          <button class="admin__mini admin__mini--ok" data-unmute="${m.id}">${t("admin.unmute")}</button>
+        </div>
+      </div>`
+      )
+      .join("");
+    list.querySelectorAll("[data-mute]").forEach((b) =>
+      b.addEventListener("click", () => muteMember(b.dataset.mute, b))
+    );
+    list.querySelectorAll("[data-unmute]").forEach((b) =>
+      b.addEventListener("click", () => unmuteMember(b.dataset.unmute, b))
+    );
+  } catch (err) {
+    list.innerHTML = `<div class="admin__empty">${err.message === "forbidden" ? t("admin.forbidden") : esc(err.message)}</div>`;
+  }
+}
+
+async function muteMember(id, btn) {
+  const duration = document.getElementById("modDuration").value.trim() || "10m";
+  const reason = document.getElementById("modReason").value.trim();
+  btn.disabled = true;
+  try {
+    await adminFetch("/api/admin/mute", {
+      method: "POST",
+      body: JSON.stringify({ member_id: id, duration, reason }),
+    });
+    loadModMembers(document.getElementById("modSearch").value.trim());
+  } catch (err) {
+    btn.disabled = false;
+    alert(err.message === "forbidden" ? t("admin.forbidden") : err.message);
+  }
+}
+
+async function unmuteMember(id, btn) {
+  btn.disabled = true;
+  try {
+    await adminFetch("/api/admin/unmute", {
+      method: "POST",
+      body: JSON.stringify({ member_id: id }),
+    });
+    loadModMembers(document.getElementById("modSearch").value.trim());
+  } catch (err) {
+    btn.disabled = false;
+    alert(err.message === "forbidden" ? t("admin.forbidden") : err.message);
+  }
+}
+
+async function loadStats() {
+  const grid = document.getElementById("statsGrid");
+  if (!grid) return;
+  grid.innerHTML = `<div class="admin__empty">${t("admin.loading")}</div>`;
+  try {
+    const s = await adminFetch("/api/admin/stats");
+    const items = [
+      ["members", s.members],
+      ["humans", s.humans],
+      ["bots", s.bots],
+      ["admins", s.admins],
+      ["roles", s.roles],
+      ["channels", s.channels],
+      ["tickets", s.tickets],
+    ];
+    grid.innerHTML = items
+      .map(
+        ([k, v]) => `<div class="admin__stat"><strong>${v}</strong><span>${t("admin.stat." + k)}</span></div>`
+      )
+      .join("");
+  } catch (err) {
+    grid.innerHTML = `<div class="admin__empty">${err.message === "forbidden" ? t("admin.forbidden") : esc(err.message)}</div>`;
+  }
+}
+
+const ticketsRefresh = document.getElementById("ticketsRefresh");
+if (ticketsRefresh) ticketsRefresh.addEventListener("click", loadTickets);
+const statsRefresh = document.getElementById("statsRefresh");
+if (statsRefresh) statsRefresh.addEventListener("click", loadStats);
+const modSearchBtn = document.getElementById("modSearchBtn");
+if (modSearchBtn)
+  modSearchBtn.addEventListener("click", () =>
+    loadModMembers(document.getElementById("modSearch").value.trim())
+  );
+const modSearch = document.getElementById("modSearch");
+if (modSearch)
+  modSearch.addEventListener("keydown", (e) => {
+    if (e.key === "Enter") loadModMembers(modSearch.value.trim());
+  });
