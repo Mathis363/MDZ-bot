@@ -4,7 +4,7 @@
    En local : http://localhost:8080
    En ligne : l'URL de votre hébergement (ex: https://mdz-bot.onrender.com)
    ============================================================ */
-const API_BASE = "http://localhost:8080";
+const API_BASE = "http://localhost:8790";
 const SITE_URL = "https://mathis363.github.io/MDZ-bot/";
 
 document.getElementById("year").textContent = new Date().getFullYear();
