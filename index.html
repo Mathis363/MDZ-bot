@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>MDZ Bot — Bots Discord sur mesure</title>
-  <meta name="description" content="Bots Discord personnalisés, puissants et fiables. Modération, économie, musique, tickets et plus. Livraison rapide." />
+  <title data-i18n="meta.title">MDZ Bot — Custom Discord bots</title>
+  <meta name="description" content="Custom, powerful and reliable Discord bots. Moderation, economy, music, tickets and more. Fast delivery." />
   <meta name="theme-color" content="#05060a" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -44,18 +44,22 @@
         <span class="brand__text">MDZ<em>Bot</em></span>
       </a>
       <nav class="nav__links" id="navLinks">
-        <a href="#services" data-magnetic>Services</a>
-        <a href="#demo" data-magnetic>Démo</a>
-        <a href="#process" data-magnetic>Process</a>
-        <a href="#faq" data-magnetic>FAQ</a>
-        <a href="#contact" data-magnetic>Contact</a>
+        <a href="#services" data-magnetic data-i18n="nav.services">Services</a>
+        <a href="#demo" data-magnetic data-i18n="nav.demo">Demo</a>
+        <a href="#process" data-magnetic data-i18n="nav.process">Process</a>
+        <a href="#faq" data-magnetic data-i18n="nav.faq">FAQ</a>
+        <a href="#contact" data-magnetic data-i18n="nav.contact">Contact</a>
       </nav>
       <div class="nav__actions">
+        <button class="lang-btn" id="langToggle" data-magnetic aria-label="Change language">
+          <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.5 2.5 15 0 18M12 3c-2.5 2.5-2.5 15 0 18"/></svg>
+          <span id="langLabel">FR</span>
+        </button>
         <button class="btn btn--glass btn--small" id="loginBtn" data-magnetic>
           <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M4 6c4-1.5 12-1.5 16 0 1.5 3 2.5 7 2.5 10.5-2 2.5-5 3.5-5 3.5l-1-1.7c1.2-.4 2-.9 2-.9C14.5 19 12 19 12 19s-2.5 0-6.5-1.6c0 0 .8.5 2 .9L6.5 20S3.5 19 1.5 16.5C1.5 13 2.5 9 4 6Z"/></svg>
-          Connexion
+          <span data-i18n="nav.login">Login</span>
         </button>
-        <a href="#contact" class="btn btn--primary btn--small" data-magnetic>Démarrer <span class="arrow">→</span></a>
+        <a href="#contact" class="btn btn--primary btn--small" data-magnetic><span data-i18n="nav.start">Get started</span> <span class="arrow">→</span></a>
         <button class="nav__burger" id="burger" aria-label="Menu"><span></span><span></span><span></span></button>
       </div>
     </div>
@@ -65,24 +69,24 @@
     <section class="hero">
       <div class="container hero__inner">
         <div class="hero__text">
-          <span class="badge"><span class="dot"></span> Développement Discord sur mesure</span>
+          <span class="badge"><span class="dot"></span> <span data-i18n="hero.badge">Custom Discord development</span></span>
           <h1 class="hero__title">
-            Des bots Discord<br />
-            <span class="grad">qui font la différence.</span>
+            <span data-i18n="hero.title1">Discord bots</span><br />
+            <span class="grad" data-i18n="hero.title2">that make a difference.</span>
           </h1>
-          <p class="hero__sub">
-            Nous concevons votre bot sur mesure, de A à Z.
-            Modération, économie, musique, tickets, niveaux — votre communauté mérite mieux.
+          <p class="hero__sub" data-i18n="hero.sub">
+            We build your bot from scratch, A to Z.
+            Moderation, economy, music, tickets, levels — your community deserves better.
           </p>
           <div class="hero__actions">
-            <a href="#contact" class="btn btn--primary btn--lg" data-magnetic>Lancer mon projet <span class="arrow">→</span></a>
-            <a href="#demo" class="btn btn--glass btn--lg" data-magnetic>Voir la démo</a>
+            <a href="#contact" class="btn btn--primary btn--lg" data-magnetic><span data-i18n="hero.cta1">Start my project</span> <span class="arrow">→</span></a>
+            <a href="#demo" class="btn btn--glass btn--lg" data-magnetic><span data-i18n="hero.cta2">See the demo</span></a>
           </div>
           <div class="stats" id="stats">
-            <div class="stat"><strong data-count="24" data-suffix="/7">0</strong><span>Support &amp; suivi</span></div>
-            <div class="stat"><strong data-count="48" data-suffix="h">0</strong><span>Livraison express</span></div>
-            <div class="stat"><strong data-count="100" data-suffix="%">0</strong><span>Code sur mesure</span></div>
-            <div class="stat"><strong data-count="7" data-suffix="j/7">0</strong><span>Support dédié</span></div>
+            <div class="stat"><strong data-count="24" data-suffix="/7">0</strong><span data-i18n="hero.stat1">Support &amp; follow-up</span></div>
+            <div class="stat"><strong data-count="48" data-suffix="h">0</strong><span data-i18n="hero.stat2">Express delivery</span></div>
+            <div class="stat"><strong data-count="100" data-suffix="%">0</strong><span data-i18n="hero.stat3">Custom code</span></div>
+            <div class="stat"><strong data-count="7" data-suffix="d/7">0</strong><span data-i18n="hero.stat4">Dedicated support</span></div>
           </div>
         </div>
 
@@ -92,23 +96,23 @@
             <div class="mock__header">
               <span class="mock__dots"><i></i><i></i><i></i></span>
               <span class="mock__title">MDZ Bot</span>
-              <span class="mock__status"><i></i> en ligne</span>
+              <span class="mock__status"><i></i> <span data-i18n="mock.online">online</span></span>
             </div>
             <div class="mock__body" id="mockBody">
               <div class="msg msg--user">
                 <span class="msg__ava">Y</span>
-                <div><div class="msg__meta"><b>You</b><time>aujourd'hui</time></div><div class="msg__content">/website</div></div>
+                <div><div class="msg__meta"><b>You</b><time data-i18n="mock.today">today</time></div><div class="msg__content">/website</div></div>
               </div>
               <div class="msg msg--bot">
                 <span class="msg__ava msg__ava--bot">
                   <svg viewBox="0 0 24 24" width="18" height="18" fill="#fff"><path d="M4 6c4-1.5 12-1.5 16 0 1.5 3 2.5 7 2.5 10.5-2 2.5-5 3.5-5 3.5l-1-1.7c1.2-.4 2-.9 2-.9C14.5 19 12 19 12 19s-2.5 0-6.5-1.6c0 0 .8.5 2 .9L6.5 20S3.5 19 1.5 16.5C1.5 13 2.5 9 4 6Z"/></svg>
                 </span>
                 <div>
-                  <div class="msg__meta"><b class="bot-name">MDZ Bot</b><span class="app-tag">APP</span><time>aujourd'hui</time></div>
+                  <div class="msg__meta"><b class="bot-name">MDZ Bot</b><span class="app-tag">APP</span><time data-i18n="mock.today">today</time></div>
                   <div class="msg__content">
                     <div class="embed">
-                      <div class="embed__title">🌐 Notre site web</div>
-                      <div class="embed__desc">Découvrez tous nos services et connectez-vous à votre compte.</div>
+                      <div class="embed__title" data-i18n="mock.embedTitle">🌐 Our website</div>
+                      <div class="embed__desc" data-i18n="mock.embedDesc">Discover all our services and log in to your account.</div>
                       <div class="embed__link">mathis363.github.io/MDZ-bot</div>
                     </div>
                   </div>
@@ -122,50 +126,47 @@
               </div>
             </div>
           </div>
-          <div class="float-chip float-chip--1" data-tilt>⚡ Latence 12ms</div>
-          <div class="float-chip float-chip--2" data-tilt>🛡️ Anti-raid actif</div>
+          <div class="float-chip float-chip--1" data-tilt data-i18n="mock.chip1">⚡ 12ms latency</div>
+          <div class="float-chip float-chip--2" data-tilt data-i18n="mock.chip2">🛡️ Anti-raid active</div>
         </div>
       </div>
     </section>
 
     <section class="marquee">
-      <div class="marquee__track">
-        <span>🛡️ Anti-Raid</span><span>💰 Économie</span><span>🎵 Musique HD</span><span>🎫 Tickets</span><span>📈 Levels &amp; XP</span><span>🎉 Giveaways</span><span>🤖 IA</span><span>🔔 Webhooks</span><span>📊 Dashboard</span><span>⚡ Slash Commands</span>
-        <span>🛡️ Anti-Raid</span><span>💰 Économie</span><span>🎵 Musique HD</span><span>🎫 Tickets</span><span>📈 Levels &amp; XP</span><span>🎉 Giveaways</span><span>🤖 IA</span><span>🔔 Webhooks</span><span>📊 Dashboard</span><span>⚡ Slash Commands</span>
-      </div>
+      <div class="marquee__track" id="marqueeTrack"></div>
     </section>
 
     <section id="services" class="section">
       <div class="container">
         <div class="section__head reveal">
-          <span class="eyebrow">Services</span>
-          <h2 class="section__title">Tout ce dont votre serveur a besoin</h2>
-          <p class="section__sub">Des modules pensés pour être puissants, rapides et totalement personnalisés.</p>
+          <span class="eyebrow" data-i18n="services.eyebrow">Services</span>
+          <h2 class="section__title" data-i18n="services.title">Everything your server needs</h2>
+          <p class="section__sub" data-i18n="services.sub">Modules built to be powerful, fast and fully custom.</p>
         </div>
 
         <div class="bento">
           <article class="cell cell--wide reveal" data-tilt>
             <div class="cell__glow"></div>
             <div class="cell__icon">🛡️</div>
-            <h3>Modération &amp; Sécurité</h3>
-            <p>Anti-spam, anti-raid, auto-mod intelligent, sanctions automatiques et logs complets en temps réel.</p>
+            <h3 data-i18n="services.mod.title">Moderation &amp; Security</h3>
+            <p data-i18n="services.mod.desc">Anti-spam, anti-raid, smart auto-mod, automatic sanctions and full real-time logs.</p>
             <div class="cell__chips"><span>Anti-raid</span><span>Auto-mod</span><span>Logs</span></div>
           </article>
-          <article class="cell reveal" data-tilt><div class="cell__glow"></div><div class="cell__icon">💰</div><h3>Économie</h3><p>Monnaie virtuelle, boutique, rôles récompenses et mini-jeux.</p></article>
-          <article class="cell reveal" data-tilt><div class="cell__glow"></div><div class="cell__icon">🎵</div><h3>Musique</h3><p>Lecture YouTube &amp; Spotify, file d'attente et playlists.</p></article>
+          <article class="cell reveal" data-tilt><div class="cell__glow"></div><div class="cell__icon">💰</div><h3 data-i18n="services.eco.title">Economy</h3><p data-i18n="services.eco.desc">Virtual currency, shop, reward roles and mini-games.</p></article>
+          <article class="cell reveal" data-tilt><div class="cell__glow"></div><div class="cell__icon">🎵</div><h3 data-i18n="services.music.title">Music</h3><p data-i18n="services.music.desc">YouTube &amp; Spotify playback, queue and playlists.</p></article>
           <article class="cell cell--tall reveal" data-tilt>
             <div class="cell__glow"></div>
             <div class="cell__icon">🎫</div>
-            <h3>Tickets &amp; Support</h3>
-            <p>Système de tickets complet, transcripts automatiques et panneaux interactifs.</p>
+            <h3 data-i18n="services.tickets.title">Tickets &amp; Support</h3>
+            <p data-i18n="services.tickets.desc">Full ticket system, automatic transcripts and interactive panels.</p>
             <div class="mini-ui">
-              <div class="mini-ui__row"><span class="mini-ui__dot"></span> Nouveau ticket · <b>#support</b></div>
-              <div class="mini-ui__row"><span class="mini-ui__dot"></span> Transcript envoyé au staff</div>
-              <div class="mini-ui__row"><span class="mini-ui__dot"></span> Ticket fermé ✓</div>
+              <div class="mini-ui__row"><span class="mini-ui__dot"></span> <span data-i18n-html="services.tickets.row1">New ticket · <b>#support</b></span></div>
+              <div class="mini-ui__row"><span class="mini-ui__dot"></span> <span data-i18n="services.tickets.row2">Transcript sent to staff</span></div>
+              <div class="mini-ui__row"><span class="mini-ui__dot"></span> <span data-i18n="services.tickets.row3">Ticket closed ✓</span></div>
             </div>
           </article>
-          <article class="cell reveal" data-tilt><div class="cell__glow"></div><div class="cell__icon">📈</div><h3>Niveaux &amp; XP</h3><p>Progression, rôles auto et classements.</p></article>
-          <article class="cell reveal" data-tilt><div class="cell__glow"></div><div class="cell__icon">🎉</div><h3>Giveaways</h3><p>Concours automatisés avec conditions et tirages.</p></article>
+          <article class="cell reveal" data-tilt><div class="cell__glow"></div><div class="cell__icon">📈</div><h3 data-i18n="services.levels.title">Levels &amp; XP</h3><p data-i18n="services.levels.desc">Progression, auto roles and leaderboards.</p></article>
+          <article class="cell reveal" data-tilt><div class="cell__glow"></div><div class="cell__icon">🎉</div><h3 data-i18n="services.giveaways.title">Giveaways</h3><p data-i18n="services.giveaways.desc">Automated contests with entry conditions and draws.</p></article>
         </div>
       </div>
     </section>
@@ -173,9 +174,9 @@
     <section id="demo" class="section section--tight">
       <div class="container">
         <div class="section__head reveal">
-          <span class="eyebrow">Démo live</span>
-          <h2 class="section__title">Commandes simples, résultats immédiats</h2>
-          <p class="section__sub">Exemple avec la commande <code>/website</code>.</p>
+          <span class="eyebrow" data-i18n="demo.eyebrow">Live demo</span>
+          <h2 class="section__title" data-i18n="demo.title">Simple commands, instant results</h2>
+          <p class="section__sub" data-i18n-html="demo.sub">Example with the <code>/website</code> command.</p>
         </div>
         <div class="chat reveal" data-tilt>
           <div class="chat__glow"></div>
@@ -187,13 +188,13 @@
     <section id="process" class="section section--tight">
       <div class="container">
         <div class="section__head reveal">
-          <span class="eyebrow">Process</span>
-          <h2 class="section__title">De l'idée au bot, en 3 étapes</h2>
+          <span class="eyebrow" data-i18n="process.eyebrow">Process</span>
+          <h2 class="section__title" data-i18n="process.title">From idea to bot, in 3 steps</h2>
         </div>
         <div class="steps">
-          <div class="step reveal" data-tilt><span class="step__num">01</span><h3>Discussion</h3><p>On définit ensemble vos besoins et les fonctionnalités souhaitées.</p></div>
-          <div class="step reveal" data-tilt><span class="step__num">02</span><h3>Développement</h3><p>Nous codons et testons votre bot, avec un aperçu suivi en temps réel.</p></div>
-          <div class="step reveal" data-tilt><span class="step__num">03</span><h3>Livraison</h3><p>Remise du bot, prise en main et support continu.</p></div>
+          <div class="step reveal" data-tilt><span class="step__num">01</span><h3 data-i18n="process.step1.title">Discussion</h3><p data-i18n="process.step1.desc">We define your needs and the features you want together.</p></div>
+          <div class="step reveal" data-tilt><span class="step__num">02</span><h3 data-i18n="process.step2.title">Development</h3><p data-i18n="process.step2.desc">We code and test your bot, with a live preview.</p></div>
+          <div class="step reveal" data-tilt><span class="step__num">03</span><h3 data-i18n="process.step3.title">Delivery</h3><p data-i18n="process.step3.desc">Bot handover, onboarding and ongoing support.</p></div>
         </div>
       </div>
     </section>
@@ -201,13 +202,13 @@
     <section id="faq" class="section section--tight">
       <div class="container">
         <div class="section__head reveal">
-          <span class="eyebrow">FAQ</span>
-          <h2 class="section__title">Questions fréquentes</h2>
+          <span class="eyebrow" data-i18n="faq.eyebrow">FAQ</span>
+          <h2 class="section__title" data-i18n="faq.title">Frequently asked questions</h2>
         </div>
         <div class="faq">
-          <details class="reveal"><summary>Combien de temps pour recevoir mon bot ?</summary><p>En général 2 à 5 jours selon la complexité. Un service express en 48h est possible.</p></details>
-          <details class="reveal"><summary>Comment fonctionne la connexion au site ?</summary><p>Cliquez sur « Connexion », un code s'affiche, puis tapez <code>/webcode &lt;code&gt;</code> sur Discord pour lier votre compte.</p></details>
-          <details class="reveal"><summary>Quels modes de paiement acceptez-vous ?</summary><p>PayPal, virement et cryptomonnaies.</p></details>
+          <details class="reveal"><summary data-i18n="faq.q1">How long to receive my bot?</summary><p data-i18n="faq.a1">Usually 2 to 5 days depending on complexity. An express 48h service is available.</p></details>
+          <details class="reveal"><summary data-i18n="faq.q2">How does the site login work?</summary><p data-i18n-html="faq.a2">Click “Login”, a code appears, then type <code>/webcode &lt;code&gt;</code> on Discord to link your account.</p></details>
+          <details class="reveal"><summary data-i18n="faq.q3">What payment methods do you accept?</summary><p data-i18n="faq.a3">PayPal, bank transfer and cryptocurrencies.</p></details>
         </div>
       </div>
     </section>
@@ -217,32 +218,31 @@
         <div class="cta reveal" data-tilt>
           <div class="cta__ring"></div>
           <div class="cta__glow"></div>
-          <h2>Prêt à donner vie à votre bot&nbsp;?</h2>
-          <p>Connecte-toi avec Discord puis décris ton projet : on ouvre un ticket et on te répond sous 24h.</p>
+          <h2 data-i18n="contact.title">Ready to bring your bot to life?</h2>
+          <p data-i18n="contact.sub">Log in with Discord then describe your project: we open a ticket and reply within 24h.</p>
 
           <div class="cta__actions" id="contactStart">
-            <button class="btn btn--primary btn--lg" id="openTicketForm" data-magnetic>Créer mon bot <span class="arrow">→</span></button>
+            <button class="btn btn--primary btn--lg" id="openTicketForm" data-magnetic><span data-i18n="contact.startBtn">Create my bot</span> <span class="arrow">→</span></button>
           </div>
 
           <form class="contact-form is-hidden" id="contactForm" novalidate>
             <div class="form-user is-hidden" id="formUser">
               <img id="formUserAva" alt="avatar" />
-              <div><strong id="formUserName">—</strong><small>Connecté avec Discord</small></div>
+              <div><strong id="formUserName">—</strong><small data-i18n="contact.connectedWith">Connected with Discord</small></div>
             </div>
 
             <div class="form-guest is-hidden" id="formGuest">
-              <p>Connecte ton compte Discord pour créer ton bot.</p>
-              <button type="button" class="btn btn--primary" id="formLogin">Se connecter avec Discord</button>
+              <button type="button" class="btn btn--glass btn--full" id="formLogin"><span data-i18n="contact.guestBtn">Log in with Discord</span></button>
             </div>
 
-            <div class="form-fields is-hidden" id="formFields">
+            <div class="form-fields" id="formFields">
               <div class="field">
-                <input type="text" id="cTitle" maxlength="100" placeholder="Titre du bot (ex : Bot de modération)" required />
+                <input type="text" id="cTitle" maxlength="100" data-i18n-ph="contact.titlePh" placeholder="Bot title (e.g. Moderation bot)" required />
               </div>
               <div class="field">
-                <textarea id="cMessage" maxlength="2000" rows="4" placeholder="Décris ton projet, tes besoins…" required></textarea>
+                <textarea id="cMessage" maxlength="2000" rows="4" data-i18n-ph="contact.msgPh" placeholder="Describe your project, your needs…" required></textarea>
               </div>
-              <button type="submit" class="btn btn--primary btn--lg" data-magnetic>Envoyer <span class="arrow">→</span></button>
+              <button type="submit" class="btn btn--primary btn--lg" data-magnetic><span data-i18n="contact.submit">Send</span> <span class="arrow">→</span></button>
               <div class="form-status" id="formStatus" role="status"></div>
             </div>
           </form>
@@ -257,33 +257,33 @@
         <span class="brand__logo"><svg viewBox="0 0 24 24" fill="none"><path d="M4 6c4-1.5 12-1.5 16 0 1.5 3 2.5 7 2.5 10.5-2 2.5-5 3.5-5 3.5l-1-1.7c1.2-.4 2-.9 2-.9C14.5 19 12 19 12 19s-2.5 0-6.5-1.6c0 0 .8.5 2 .9L6.5 20S3.5 19 1.5 16.5C1.5 13 2.5 9 4 6Z" fill="currentColor"/><circle cx="9" cy="13" r="1.6" fill="#05060a"/><circle cx="15" cy="13" r="1.6" fill="#05060a"/></svg></span>
         <span class="brand__text">MDZ<em>Bot</em></span>
       </a>
-      <span>© <span id="year"></span> MDZ Bot — Tous droits réservés.</span>
+      <span>© <span id="year"></span> MDZ Bot — <span data-i18n="footer.rights">All rights reserved.</span></span>
     </div>
   </footer>
 
   <div class="modal" id="loginModal">
     <div class="modal__backdrop" data-close></div>
     <div class="modal__panel">
-      <button class="modal__close" data-close aria-label="Fermer">×</button>
+      <button class="modal__close" data-close aria-label="Close">×</button>
       <div class="modal__state" id="stateStart">
         <div class="modal__icon">🌐</div>
-        <h3>Connexion Discord</h3>
-        <p>Connectez votre compte Discord pour accéder au site.</p>
-        <button class="btn btn--primary btn--full" id="startPair">Générer un code</button>
+        <h3 data-i18n="modal.start.title">Discord login</h3>
+        <p data-i18n="modal.start.text">Connect your Discord account to access the site.</p>
+        <button class="btn btn--primary btn--full" id="startPair" data-i18n="modal.start.btn">Generate a code</button>
       </div>
       <div class="modal__state is-hidden" id="stateCode">
-        <h3>Votre code de connexion</h3>
-        <p>Tapez cette commande sur Discord :</p>
-        <div class="code-box"><span id="codeValue">------</span><button id="copyCode" title="Copier">⧉</button></div>
+        <h3 data-i18n="modal.code.title">Your login code</h3>
+        <p data-i18n="modal.code.text">Type this command on Discord:</p>
+        <div class="code-box"><span id="codeValue">------</span><button id="copyCode" title="Copy">⧉</button></div>
         <div class="modal__cmd">/webcode <span id="codeInline">------</span></div>
-        <div class="modal__waiting"><span class="spinner"></span> En attente de validation…</div>
+        <div class="modal__waiting"><span class="spinner"></span> <span data-i18n="modal.code.waiting">Waiting for confirmation…</span></div>
       </div>
       <div class="modal__state is-hidden" id="stateDone">
         <img class="user-ava" id="userAva" alt="avatar" />
-        <h3 id="userName">Utilisateur</h3>
+        <h3 id="userName">User</h3>
         <p id="userTag" class="muted"></p>
-        <span class="connected-pill">✓ Connecté</span>
-        <button class="btn btn--glass btn--full" id="logoutBtn">Se déconnecter</button>
+        <span class="connected-pill" data-i18n="modal.done.connected">✓ Connected</span>
+        <button class="btn btn--glass btn--full" id="logoutBtn" data-i18n="modal.done.logout">Log out</button>
       </div>
     </div>
   </div>

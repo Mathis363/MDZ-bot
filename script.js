@@ -1,11 +1,291 @@
 /* ============================================================
    MDZ Bot — site config
    API_BASE = URL publique de l'API du bot (aiohttp) pour la connexion.
-   En local : http://localhost:8080
+   En local : http://localhost:8790
    En ligne : l'URL de votre hébergement (ex: https://mdz-bot.onrender.com)
    ============================================================ */
 const API_BASE = "http://localhost:8790";
 const SITE_URL = "https://mathis363.github.io/MDZ-bot/";
+
+/* ============================================================
+   i18n — English (default) + French
+   ============================================================ */
+const I18N = {
+  en: {
+    "meta.title": "MDZ Bot — Custom Discord bots",
+    "nav.services": "Services",
+    "nav.demo": "Demo",
+    "nav.process": "Process",
+    "nav.faq": "FAQ",
+    "nav.contact": "Contact",
+    "nav.login": "Login",
+    "nav.start": "Get started",
+
+    "hero.badge": "Custom Discord development",
+    "hero.title1": "Discord bots",
+    "hero.title2": "that make a difference.",
+    "hero.sub": "We build your bot from scratch, A to Z. Moderation, economy, music, tickets, levels — your community deserves better.",
+    "hero.cta1": "Start my project",
+    "hero.cta2": "See the demo",
+    "hero.stat1": "Support & follow-up",
+    "hero.stat2": "Express delivery",
+    "hero.stat3": "Custom code",
+    "hero.stat4": "Dedicated support",
+
+    "mock.online": "online",
+    "mock.today": "today",
+    "mock.embedTitle": "🌐 Our website",
+    "mock.embedDesc": "Discover all our services and log in to your account.",
+    "mock.chip1": "⚡ 12ms latency",
+    "mock.chip2": "🛡️ Anti-raid active",
+
+    "marquee.items": '<span>🛡️ Anti-Raid</span><span>💰 Economy</span><span>🎵 HD Music</span><span>🎫 Tickets</span><span>📈 Levels &amp; XP</span><span>🎉 Giveaways</span><span>🤖 AI</span><span>🔔 Webhooks</span><span>📊 Dashboard</span><span>⚡ Slash Commands</span>',
+
+    "services.eyebrow": "Services",
+    "services.title": "Everything your server needs",
+    "services.sub": "Modules built to be powerful, fast and fully custom.",
+    "services.mod.title": "Moderation & Security",
+    "services.mod.desc": "Anti-spam, anti-raid, smart auto-mod, automatic sanctions and full real-time logs.",
+    "services.eco.title": "Economy",
+    "services.eco.desc": "Virtual currency, shop, reward roles and mini-games.",
+    "services.music.title": "Music",
+    "services.music.desc": "YouTube & Spotify playback, queue and playlists.",
+    "services.tickets.title": "Tickets & Support",
+    "services.tickets.desc": "Full ticket system, automatic transcripts and interactive panels.",
+    "services.tickets.row1": "New ticket · <b>#support</b>",
+    "services.tickets.row2": "Transcript sent to staff",
+    "services.tickets.row3": "Ticket closed ✓",
+    "services.levels.title": "Levels & XP",
+    "services.levels.desc": "Progression, auto roles and leaderboards.",
+    "services.giveaways.title": "Giveaways",
+    "services.giveaways.desc": "Automated contests with entry conditions and draws.",
+
+    "demo.eyebrow": "Live demo",
+    "demo.title": "Simple commands, instant results",
+    "demo.sub": 'Example with the <code>/website</code> command.',
+
+    "process.eyebrow": "Process",
+    "process.title": "From idea to bot, in 3 steps",
+    "process.step1.title": "Discussion",
+    "process.step1.desc": "We define your needs and the features you want together.",
+    "process.step2.title": "Development",
+    "process.step2.desc": "We code and test your bot, with a live preview.",
+    "process.step3.title": "Delivery",
+    "process.step3.desc": "Bot handover, onboarding and ongoing support.",
+
+    "faq.eyebrow": "FAQ",
+    "faq.title": "Frequently asked questions",
+    "faq.q1": "How long to receive my bot?",
+    "faq.a1": "Usually 2 to 5 days depending on complexity. An express 48h service is available.",
+    "faq.q2": "How does the site login work?",
+    "faq.a2": 'Click “Login”, a code appears, then type <code>/webcode &lt;code&gt;</code> on Discord to link your account.',
+    "faq.q3": "What payment methods do you accept?",
+    "faq.a3": "PayPal, bank transfer and cryptocurrencies.",
+
+    "contact.title": "Ready to bring your bot to life?",
+    "contact.sub": "Log in with Discord then describe your project: we open a ticket and reply within 24h.",
+    "contact.startBtn": "Create my bot",
+    "contact.connectedWith": "Connected with Discord",
+    "contact.guestBtn": "Log in with Discord",
+    "contact.titlePh": "Bot title (e.g. Moderation bot)",
+    "contact.msgPh": "Describe your project, your needs…",
+    "contact.submit": "Send",
+    "contact.sending": "Sending…",
+    "contact.fill": "Please fill in the title and description.",
+    "contact.needLogin": "You must log in with Discord using the code.",
+    "contact.ok": "✅ Ticket sent! We'll reply very soon.",
+    "contact.noGuild": "⚠️ The bot isn't on any server yet.",
+    "contact.error": "❌ Sending failed ({msg}). Make sure the bot is running and reachable at {api}.",
+
+    "footer.rights": "All rights reserved.",
+
+    "modal.start.title": "Discord login",
+    "modal.start.text": "Connect your Discord account to access the site.",
+    "modal.start.btn": "Generate a code",
+    "modal.code.title": "Your login code",
+    "modal.code.text": "Type this command on Discord:",
+    "modal.code.waiting": "Waiting for confirmation…",
+    "modal.done.connected": "✓ Connected",
+    "modal.done.logout": "Log out",
+
+    "alert.api": "Can't reach the bot (API). Make sure the bot is online.",
+
+    "chat.you": "You",
+    "chat.today": "today",
+    "chat.embedTitle": "🌐 Our website",
+    "chat.embedDesc": "Discover all our services and log in to your account.",
+    "chat.success": "✅ <b>Login successful!</b> Your Discord account is now linked to the website.",
+  },
+
+  fr: {
+    "meta.title": "MDZ Bot — Bots Discord sur mesure",
+    "nav.services": "Services",
+    "nav.demo": "Démo",
+    "nav.process": "Process",
+    "nav.faq": "FAQ",
+    "nav.contact": "Contact",
+    "nav.login": "Connexion",
+    "nav.start": "Démarrer",
+
+    "hero.badge": "Développement Discord sur mesure",
+    "hero.title1": "Des bots Discord",
+    "hero.title2": "qui font la différence.",
+    "hero.sub": "Nous créons votre bot de A à Z. Modération, économie, musique, tickets, niveaux — votre communauté mérite mieux.",
+    "hero.cta1": "Lancer mon projet",
+    "hero.cta2": "Voir la démo",
+    "hero.stat1": "Support & suivi",
+    "hero.stat2": "Livraison express",
+    "hero.stat3": "Code sur mesure",
+    "hero.stat4": "Accompagnement dédié",
+
+    "mock.online": "en ligne",
+    "mock.today": "aujourd'hui",
+    "mock.embedTitle": "🌐 Notre site web",
+    "mock.embedDesc": "Découvrez tous nos services et connectez-vous à votre compte.",
+    "mock.chip1": "⚡ Latence 12ms",
+    "mock.chip2": "🛡️ Anti-raid actif",
+
+    "marquee.items": '<span>🛡️ Anti-Raid</span><span>💰 Économie</span><span>🎵 Musique HD</span><span>🎫 Tickets</span><span>📈 Niveaux &amp; XP</span><span>🎉 Giveaways</span><span>🤖 IA</span><span>🔔 Webhooks</span><span>📊 Dashboard</span><span>⚡ Slash Commands</span>',
+
+    "services.eyebrow": "Services",
+    "services.title": "Tout ce qu'il faut à votre serveur",
+    "services.sub": "Des modules pensés pour être puissants, rapides et entièrement personnalisés.",
+    "services.mod.title": "Modération & Sécurité",
+    "services.mod.desc": "Anti-spam, anti-raid, auto-mod intelligent, sanctions automatiques et logs complets en temps réel.",
+    "services.eco.title": "Économie",
+    "services.eco.desc": "Monnaie virtuelle, boutique, rôles récompenses et mini-jeux.",
+    "services.music.title": "Musique",
+    "services.music.desc": "Lecture YouTube & Spotify, file d'attente et playlists.",
+    "services.tickets.title": "Tickets & Support",
+    "services.tickets.desc": "Système de tickets complet, transcripts automatiques et panneaux interactifs.",
+    "services.tickets.row1": "Nouveau ticket · <b>#support</b>",
+    "services.tickets.row2": "Transcript envoyé au staff",
+    "services.tickets.row3": "Ticket fermé ✓",
+    "services.levels.title": "Niveaux & XP",
+    "services.levels.desc": "Progression, rôles automatiques et classements.",
+    "services.giveaways.title": "Giveaways",
+    "services.giveaways.desc": "Concours automatisés avec conditions de participation et tirages.",
+
+    "demo.eyebrow": "Démo interactive",
+    "demo.title": "Des commandes simples, un résultat immédiat",
+    "demo.sub": 'Exemple avec la commande <code>/website</code>.',
+
+    "process.eyebrow": "Process",
+    "process.title": "De l'idée au bot, en 3 étapes",
+    "process.step1.title": "Échange",
+    "process.step1.desc": "On définit ensemble vos besoins et les fonctionnalités souhaitées.",
+    "process.step2.title": "Développement",
+    "process.step2.desc": "On code et on teste votre bot, avec un aperçu en direct.",
+    "process.step3.title": "Livraison",
+    "process.step3.desc": "Remise du bot, prise en main et support continu.",
+
+    "faq.eyebrow": "FAQ",
+    "faq.title": "Questions fréquentes",
+    "faq.q1": "Combien de temps pour recevoir mon bot ?",
+    "faq.a1": "En général 2 à 5 jours selon la complexité. Un service express 48h est disponible.",
+    "faq.q2": "Comment fonctionne la connexion au site ?",
+    "faq.a2": 'Clique sur « Connexion », un code apparaît, puis tape <code>/webcode &lt;code&gt;</code> sur Discord pour lier ton compte.',
+    "faq.q3": "Quels moyens de paiement acceptez-vous ?",
+    "faq.a3": "PayPal, virement bancaire et cryptomonnaies.",
+
+    "contact.title": "Prêt à donner vie à votre bot ?",
+    "contact.sub": "Connecte-toi avec Discord puis décris ton projet : on ouvre un ticket et on te répond sous 24h.",
+    "contact.startBtn": "Créer mon bot",
+    "contact.connectedWith": "Connecté avec Discord",
+    "contact.guestBtn": "Se connecter avec Discord",
+    "contact.titlePh": "Titre du bot (ex : Bot de modération)",
+    "contact.msgPh": "Décris ton projet, tes besoins…",
+    "contact.submit": "Envoyer",
+    "contact.sending": "Envoi en cours…",
+    "contact.fill": "Merci de remplir le titre et la description.",
+    "contact.needLogin": "Vous devez vous connecter à Discord avec le code.",
+    "contact.ok": "✅ Ticket envoyé ! On te répond très vite.",
+    "contact.noGuild": "⚠️ Le bot n'est encore sur aucun serveur.",
+    "contact.error": "❌ Envoi impossible ({msg}). Vérifie que le bot est lancé et joignable sur {api}.",
+
+    "footer.rights": "Tous droits réservés.",
+
+    "modal.start.title": "Connexion Discord",
+    "modal.start.text": "Connectez votre compte Discord pour accéder au site.",
+    "modal.start.btn": "Générer un code",
+    "modal.code.title": "Votre code de connexion",
+    "modal.code.text": "Tapez cette commande sur Discord :",
+    "modal.code.waiting": "En attente de validation…",
+    "modal.done.connected": "✓ Connecté",
+    "modal.done.logout": "Se déconnecter",
+
+    "alert.api": "Impossible de joindre le bot (API). Vérifie que le bot est en ligne.",
+
+    "chat.you": "Vous",
+    "chat.today": "aujourd'hui",
+    "chat.embedTitle": "🌐 Notre site web",
+    "chat.embedDesc": "Découvrez tous nos services et connectez-vous à votre compte.",
+    "chat.success": "✅ <b>Connexion réussie !</b> Ton compte Discord est maintenant lié au site web.",
+  },
+};
+
+let lang = "en";
+try {
+  lang = localStorage.getItem("mdz_lang") || "en";
+} catch (_) {}
+if (!I18N[lang]) lang = "en";
+
+function t(key) {
+  return (I18N[lang] && I18N[lang][key]) ?? I18N.en[key] ?? key;
+}
+
+function tReplace(key, vars) {
+  let s = t(key);
+  for (const k in vars) s = s.split("{" + k + "}").join(vars[k]);
+  return s;
+}
+
+const marqueeTrack = document.getElementById("marqueeTrack");
+
+function applyI18n() {
+  document.documentElement.lang = lang;
+  document.querySelectorAll("[data-i18n]").forEach((el) => {
+    el.textContent = t(el.dataset.i18n);
+  });
+  document.querySelectorAll("[data-i18n-html]").forEach((el) => {
+    el.innerHTML = t(el.dataset.i18nHtml);
+  });
+  document.querySelectorAll("[data-i18n-ph]").forEach((el) => {
+    el.placeholder = t(el.dataset.i18nPh);
+  });
+  if (marqueeTrack) {
+    const items = t("marquee.items");
+    marqueeTrack.innerHTML = items + items;
+  }
+  const langLabel = document.getElementById("langLabel");
+  if (langLabel) langLabel.textContent = lang === "en" ? "FR" : "EN";
+}
+
+function applyLang(newLang) {
+  if (!I18N[newLang] || newLang === lang) return;
+  lang = newLang;
+  try {
+    localStorage.setItem("mdz_lang", lang);
+  } catch (_) {}
+  applyI18n();
+  updateContactForm();
+  if (typeof restartChatDemo === "function" && restartChatDemo) restartChatDemo();
+}
+
+const langToggle = document.getElementById("langToggle");
+if (langToggle) {
+  langToggle.addEventListener("click", () => {
+    applyLang(lang === "en" ? "fr" : "en");
+    const raw = localStorage.getItem("mdz_user");
+    if (raw) {
+      try {
+        const u = JSON.parse(raw);
+        u.lang = lang;
+        localStorage.setItem("mdz_user", JSON.stringify(u));
+      } catch (_) {}
+    }
+  });
+}
 
 document.getElementById("year").textContent = new Date().getFullYear();
 
@@ -179,40 +459,64 @@ document.querySelectorAll("[data-tilt]").forEach((el) => {
   })();
 })();
 
-/* ---------- Chat demo (typing animation) ---------- */
+/* ---------- Chat demo (typing animation, i18n-aware) ---------- */
+let restartChatDemo = null;
 (function chatDemo() {
   const body = document.getElementById("chatBody");
   if (!body) return;
   const botAva = `<span class="msg__ava msg__ava--bot"><svg viewBox="0 0 24 24" width="18" height="18" fill="#fff"><path d="M4 6c4-1.5 12-1.5 16 0 1.5 3 2.5 7 2.5 10.5-2 2.5-5 3.5-5 3.5l-1-1.7c1.2-.4 2-.9 2-.9C14.5 19 12 19 12 19s-2.5 0-6.5-1.6c0 0 .8.5 2 .9L6.5 20S3.5 19 1.5 16.5C1.5 13 2.5 9 4 6Z"/></svg></span>`;
-  const userMsg = `<div class="msg msg--user"><span class="msg__ava">Y</span><div><div class="msg__meta"><b>You</b><time>aujourd'hui</time></div><div class="msg__content chat-cmd">/website</div></div></div>`;
-  const botMsg = `<div class="msg msg--bot">${botAva}<div><div class="msg__meta"><b class="bot-name">MDZ Bot</b><span class="app-tag">APP</span><time>aujourd'hui</time></div><div class="msg__content"><div class="embed"><div class="embed__title">🌐 Notre site web</div><div class="embed__desc">Découvrez tous nos services et connectez-vous à votre compte.</div><div class="embed__link">${SITE_URL.replace(/^https?:\/\//, "").replace(/\/$/, "")}</div></div></div></div></div>`;
-  const userMsg2 = `<div class="msg msg--user"><span class="msg__ava">Y</span><div><div class="msg__meta"><b>You</b><time>aujourd'hui</time></div><div class="msg__content chat-cmd">/webcode 482915</div></div></div>`;
-  const botMsg2 = `<div class="msg msg--bot">${botAva}<div><div class="msg__meta"><b class="bot-name">MDZ Bot</b><span class="app-tag">APP</span><time>aujourd'hui</time></div><div class="msg__content">✅ <b>Connexion réussie !</b> Ton compte Discord est maintenant lié au site web.</div></div></div>`;
-  const typing = `<div class="msg msg--typing">${botAva}<span class="typing"><i></i><i></i><i></i></span></div>`;
+  const link = SITE_URL.replace(/^https?:\/\//, "").replace(/\/$/, "");
 
-  const seq = [userMsg, typing, botMsg, userMsg2, typing, botMsg2];
+  const typingMsg = () => ({ type: "typing", html: `<div class="msg msg--typing">${botAva}<span class="typing"><i></i><i></i><i></i></span></div>` });
+  const buildSeq = () => [
+    { type: "msg", html: `<div class="msg msg--user"><span class="msg__ava">Y</span><div><div class="msg__meta"><b>${t("chat.you")}</b><time>${t("chat.today")}</time></div><div class="msg__content chat-cmd">/website</div></div></div>` },
+    typingMsg(),
+    { type: "msg", html: `<div class="msg msg--bot">${botAva}<div><div class="msg__meta"><b class="bot-name">MDZ Bot</b><span class="app-tag">APP</span><time>${t("chat.today")}</time></div><div class="msg__content"><div class="embed"><div class="embed__title">${t("chat.embedTitle")}</div><div class="embed__desc">${t("chat.embedDesc")}</div><div class="embed__link">${link}</div></div></div></div></div>` },
+    { type: "msg", html: `<div class="msg msg--user"><span class="msg__ava">Y</span><div><div class="msg__meta"><b>${t("chat.you")}</b><time>${t("chat.today")}</time></div><div class="msg__content chat-cmd">/webcode 482915</div></div></div>` },
+    typingMsg(),
+    { type: "msg", html: `<div class="msg msg--bot">${botAva}<div><div class="msg__meta"><b class="bot-name">MDZ Bot</b><span class="app-tag">APP</span><time>${t("chat.today")}</time></div><div class="msg__content">${t("chat.success")}</div></div></div>` },
+  ];
+
+  let seq = buildSeq();
   let i = 0;
+  let timer = null;
+  let started = false;
+
+  const clearTimer = () => { if (timer) { clearTimeout(timer); timer = null; } };
+
   const play = () => {
     if (i >= seq.length) {
-      setTimeout(() => { body.innerHTML = ""; i = 0; setTimeout(play, 400); }, 4000);
+      timer = setTimeout(() => { body.innerHTML = ""; i = 0; seq = buildSeq(); play(); }, 4000);
       return;
     }
     const wrap = document.createElement("div");
-    wrap.innerHTML = seq[i];
+    wrap.innerHTML = seq[i].html;
     const node = wrap.firstElementChild;
-    if (seq[i] === typing) {
-      body.appendChild(node);
-      setTimeout(() => { node.remove(); i++; play(); }, 1200);
+    body.appendChild(node);
+    if (seq[i].type === "typing") {
+      timer = setTimeout(() => { node.remove(); i++; play(); }, 1200);
     } else {
-      body.appendChild(node);
-      node.scrollIntoView && null;
       i++;
-      setTimeout(play, 900);
+      timer = setTimeout(play, 900);
     }
   };
+
+  restartChatDemo = () => {
+    if (!started) return;
+    clearTimer();
+    body.innerHTML = "";
+    seq = buildSeq();
+    i = 0;
+    play();
+  };
+
   const startObserver = new IntersectionObserver((entries) => {
     entries.forEach((e) => {
-      if (e.isIntersecting) { startObserver.disconnect(); setTimeout(play, 300); }
+      if (e.isIntersecting) {
+        startObserver.disconnect();
+        started = true;
+        setTimeout(play, 300);
+      }
     });
   }, { threshold: 0.3 });
   startObserver.observe(body);
@@ -253,13 +557,34 @@ document.getElementById("loginBtn").addEventListener("click", openModal);
 modal.querySelectorAll("[data-close]").forEach((el) => el.addEventListener("click", closeModal));
 document.addEventListener("keydown", (e) => { if (e.key === "Escape") closeModal(); });
 
+function resetLoginBtn() {
+  const btn = document.getElementById("loginBtn");
+  btn.innerHTML = `<svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M4 6c4-1.5 12-1.5 16 0 1.5 3 2.5 7 2.5 10.5-2 2.5-5 3.5-5 3.5l-1-1.7c1.2-.4 2-.9 2-.9C14.5 19 12 19 12 19s-2.5 0-6.5-1.6c0 0 .8.5 2 .9L6.5 20S3.5 19 1.5 16.5C1.5 13 2.5 9 4 6Z"/></svg> <span data-i18n="nav.login">${t("nav.login")}</span>`;
+}
+
 function renderUser(u) {
   document.getElementById("userAva").src = u.avatar;
   document.getElementById("userName").textContent = u.name;
   document.getElementById("userTag").textContent = u.tag ? "@" + u.tag : "";
   const btn = document.getElementById("loginBtn");
   btn.innerHTML = `<img src="${u.avatar}" style="width:18px;height:18px;border-radius:50%"> ${u.name}`;
+  if (u.lang && I18N[u.lang]) applyLang(u.lang);
   updateContactForm();
+  syncUserLang(u);
+}
+
+async function syncUserLang(u) {
+  if (!u || !u.id) return;
+  try {
+    const r = await fetch(`${API_BASE}/api/user/${u.id}`, { cache: "no-store" });
+    if (!r.ok) return;
+    const data = await r.json();
+    if (data && data.lang && I18N[data.lang]) {
+      u.lang = data.lang;
+      try { localStorage.setItem("mdz_user", JSON.stringify(u)); } catch (_) {}
+      applyLang(data.lang);
+    }
+  } catch (_) {}
 }
 
 document.getElementById("startPair").addEventListener("click", async () => {
@@ -272,7 +597,7 @@ document.getElementById("startPair").addEventListener("click", async () => {
     showState(stateCode);
     pollStatus(code);
   } catch (err) {
-    alert("Impossible de joindre le bot (API). Vérifie que le bot est en ligne.\n\n" + API_BASE);
+    alert(t("alert.api") + "\n\n" + API_BASE);
   }
 });
 
@@ -296,7 +621,7 @@ function pollStatus(code) {
 
 document.getElementById("copyCode").addEventListener("click", () => {
   const code = document.getElementById("codeValue").textContent;
-  navigator.clipboard && navigator.clipboard.writeText(`/webcode ${code}`);
+  navigator.clipboard && navigator.clipboard.writeText(code);
   const btn = document.getElementById("copyCode");
   btn.textContent = "✓";
   setTimeout(() => (btn.textContent = "⧉"), 1200);
@@ -304,8 +629,8 @@ document.getElementById("copyCode").addEventListener("click", () => {
 
 document.getElementById("logoutBtn").addEventListener("click", () => {
   localStorage.removeItem("mdz_user");
-  const btn = document.getElementById("loginBtn");
-  btn.innerHTML = `<svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M4 6c4-1.5 12-1.5 16 0 1.5 3 2.5 7 2.5 10.5-2 2.5-5 3.5-5 3.5l-1-1.7c1.2-.4 2-.9 2-.9C14.5 19 12 19 12 19s-2.5 0-6.5-1.6c0 0 .8.5 2 .9L6.5 20S3.5 19 1.5 16.5C1.5 13 2.5 9 4 6Z"/></svg> Connexion`;
+  resetLoginBtn();
+  updateContactForm();
   showState(stateStart);
 });
 
@@ -316,7 +641,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 /* ============================================================
    FORMULAIRE DE CONTACT (ticket Discord) — affiché après clic,
-   réservé aux utilisateurs connectés avec Discord.
+   champs toujours visibles ; l'envoi requiert la connexion Discord.
    ============================================================ */
 const contactForm = document.getElementById("contactForm");
 const contactStart = document.getElementById("contactStart");
@@ -328,16 +653,13 @@ function updateContactForm() {
   const user = raw ? JSON.parse(raw) : null;
   const formUser = document.getElementById("formUser");
   const formGuest = document.getElementById("formGuest");
-  const formFields = document.getElementById("formFields");
   if (user) {
     document.getElementById("formUserAva").src = user.avatar;
     document.getElementById("formUserName").textContent = user.name;
     formUser.classList.remove("is-hidden");
     formGuest.classList.add("is-hidden");
-    formFields.classList.remove("is-hidden");
   } else {
     formUser.classList.add("is-hidden");
-    formFields.classList.add("is-hidden");
     formGuest.classList.remove("is-hidden");
   }
 }
@@ -362,7 +684,8 @@ if (contactForm) {
 
     const raw = localStorage.getItem("mdz_user");
     if (!raw) {
-      updateContactForm();
+      statusEl.className = "form-status err";
+      statusEl.textContent = t("contact.needLogin");
       return;
     }
     const user = JSON.parse(raw);
@@ -371,13 +694,13 @@ if (contactForm) {
 
     if (!title || !message) {
       statusEl.className = "form-status err";
-      statusEl.textContent = "Merci de remplir le titre et la description.";
+      statusEl.textContent = t("contact.fill");
       return;
     }
 
     submitBtn.disabled = true;
     statusEl.className = "form-status";
-    statusEl.textContent = "Envoi en cours…";
+    statusEl.textContent = t("contact.sending");
 
     try {
       const r = await fetch(`${API_BASE}/api/contact`, {
@@ -394,18 +717,21 @@ if (contactForm) {
         throw new Error(apiError);
       }
       statusEl.className = "form-status ok";
-      statusEl.textContent = "✅ Ticket envoyé ! On te répond très vite.";
+      statusEl.textContent = t("contact.ok");
       contactForm.reset();
     } catch (err) {
       statusEl.className = "form-status err";
       if (err.message === "no_guild") {
-        statusEl.textContent = "⚠️ Le bot n'est encore sur aucun serveur.";
+        statusEl.textContent = t("contact.noGuild");
       } else {
-        statusEl.textContent =
-          `❌ Envoi impossible (${err.message}). Vérifie que le bot est lancé et joignable sur ${API_BASE}.`;
+        statusEl.textContent = tReplace("contact.error", { msg: err.message, api: API_BASE });
       }
     } finally {
       submitBtn.disabled = false;
     }
   });
 }
+
+/* ---------- Apply language on load ---------- */
+applyI18n();
+updateContactForm();
