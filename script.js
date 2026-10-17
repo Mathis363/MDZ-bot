@@ -5,7 +5,7 @@
    En ligne : l'URL de votre hébergement (ex: https://mdz-bot.onrender.com)
    ============================================================ */
 const API_BASE = "http://localhost:8790";
-const SITE_URL = "https://mathis363.github.io/MDZ-bot/";
+const SITE_URL = "https://mathis363.github.io/M_N_M_S/";
 
 /* ============================================================
    i18n — English (default) + French
