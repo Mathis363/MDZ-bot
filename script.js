@@ -4,7 +4,7 @@
    En local : http://localhost:8790
    En ligne : l'URL de votre hébergement (ex: https://mdz-bot.onrender.com)
    ============================================================ */
-const API_BASE = "http://localhost:8790";
+const API_BASE = "https://m-n-m-s-bot.onrender.com";
 const SITE_URL = "https://mathis363.github.io/M_N_M_S/";
 
 /* ============================================================
